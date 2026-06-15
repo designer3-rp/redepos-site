@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>RedePOS · Painel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="icon" href="/favicons/favicon-painel.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-painel.svg">
+<style>
+  :root{
+    --accent:#E75314; --accent-2:#FA7A36; --soft:rgba(231,83,20,.12);
+    --bg:#0b1220; --bg2:#0e1525; --panel:#121a2c; --line:rgba(255,255,255,.10);
+    --ink:#eef1f6; --muted:#8b93a7; --r:12px; --ease:cubic-bezier(.22,1,.36,1);
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ font-family:'Manrope',system-ui,sans-serif; background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,h4{ font-family:'Sora',sans-serif; letter-spacing:-.01em; }
+  a{ color:var(--accent); }
+  button{ font-family:inherit; cursor:pointer; }
+  input,select,textarea{ font-family:inherit; }
+  .btn{ display:inline-flex; align-items:center; gap:.5rem; border:0; border-radius:999px; padding:.7rem 1.2rem; font-family:'Sora',sans-serif; font-weight:600; font-size:.92rem; }
+  .btn-primary{ background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:#fff; }
+  .btn-primary:hover{ filter:brightness(1.07); }
+  .btn-ghost{ background:transparent; color:var(--ink); border:1px solid var(--line); }
+  .btn-ghost:hover{ border-color:var(--accent); }
+  .btn-sm{ padding:.4rem .8rem; font-size:.82rem; border-radius:8px; }
+  .danger{ color:#ff6b6b; }
+  label{ display:block; font-size:.82rem; color:var(--muted); margin-bottom:.4rem; font-family:'Sora',sans-serif; font-weight:500; }
+  input[type=text],input[type=email],input[type=password],input[type=date],input[type=number],select,textarea{
+    width:100%; padding:.7rem .85rem; border-radius:10px; border:1px solid var(--line); background:#0c1424; color:var(--ink); font-size:.95rem;
+  }
+  input:focus,select:focus,textarea:focus{ outline:none; border-color:var(--accent); }
+  textarea{ resize:vertical; min-height:90px; }
+  .field{ margin-bottom:1rem; }
+  .row{ display:flex; align-items:center; gap:.6rem; }
+
+  /* LOGIN */
+  .login{ min-height:100vh; display:grid; place-items:center; padding:24px; }
+  .login .card{ width:100%; max-width:380px; background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:2.2rem; }
+  .login h1{ font-size:1.4rem; margin-bottom:.3rem; } .login .sub{ color:var(--muted); font-size:.9rem; margin-bottom:1.6rem; }
+  .login .mark{ display:inline-grid; place-items:center; width:38px; height:38px; border-radius:10px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:#fff; font-family:'Sora'; font-weight:800; margin-bottom:1rem; }
+  .msg{ font-size:.88rem; margin-top:.8rem; min-height:1.1em; } .msg.err{ color:#ff6b6b; } .msg.ok{ color:#46d39a; }
+
+  /* APP */
+  .app{ display:grid; grid-template-columns:248px 1fr; min-height:100vh; }
+  .side{ background:var(--bg2); border-right:1px solid var(--line); padding:1.4rem 1rem; display:flex; flex-direction:column; gap:.2rem; position:sticky; top:0; height:100vh; }
+  .side .brand{ display:flex; align-items:center; gap:.5rem; font-family:'Sora'; font-weight:800; padding:.4rem .6rem 1.2rem; }
+  .side .brand .mark{ width:28px; height:28px; border-radius:8px; display:grid; place-items:center; background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:#fff; font-size:.85rem; }
+  .navbtn{ text-align:left; background:transparent; border:0; color:var(--muted); padding:.65rem .7rem; border-radius:9px; font-size:.92rem; font-family:'Sora'; font-weight:500; }
+  .navbtn:hover{ color:var(--ink); background:rgba(255,255,255,.04); }
+  .navbtn.active{ color:#fff; background:var(--soft); }
+  .side .foot{ margin-top:auto; border-top:1px solid var(--line); padding-top:1rem; font-size:.82rem; color:var(--muted); }
+  .main{ padding:2rem 2.2rem; max-width:1000px; }
+  .head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:1.6rem; gap:1rem; flex-wrap:wrap; }
+  .head h2{ font-size:1.5rem; }
+
+  table{ width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; }
+  th,td{ text-align:left; padding:.8rem 1rem; border-bottom:1px solid var(--line); font-size:.92rem; }
+  th{ color:var(--muted); font-family:'Sora'; font-weight:600; font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; }
+  tr:last-child td{ border-bottom:0; }
+  .tag-pill{ display:inline-block; padding:.15rem .55rem; border-radius:999px; background:var(--soft); color:var(--accent); font-size:.75rem; font-weight:600; }
+  .dot{ width:9px; height:9px; border-radius:50%; display:inline-block; } .dot.on{ background:#46d39a; } .dot.off{ background:#5b6478; }
+  .empty{ color:var(--muted); padding:1.4rem; }
+
+  /* MODAL */
+  .modal{ position:fixed; inset:0; z-index:50; display:none; }
+  .modal.open{ display:block; }
+  .modal .bg{ position:absolute; inset:0; background:rgba(3,6,12,.6); backdrop-filter:blur(3px); }
+  .modal .sheet{ position:absolute; top:0; right:0; height:100%; width:min(620px,100%); background:var(--panel); border-left:1px solid var(--line); padding:2rem; overflow-y:auto; }
+  .modal .sheet h3{ font-size:1.25rem; margin-bottom:1.4rem; }
+  .modal .actions{ display:flex; gap:.7rem; margin-top:1.4rem; align-items:center; }
+  .modal .actions .spacer{ flex:1; }
+
+  /* EDITOR */
+  .toolbar{ display:flex; flex-wrap:wrap; gap:.3rem; border:1px solid var(--line); border-bottom:0; border-radius:10px 10px 0 0; padding:.4rem; background:#0c1424; }
+  .toolbar button{ background:transparent; border:1px solid transparent; color:var(--ink); border-radius:7px; padding:.35rem .6rem; font-size:.85rem; font-family:'Sora'; }
+  .toolbar button:hover{ background:rgba(255,255,255,.06); border-color:var(--line); }
+  .editor{ border:1px solid var(--line); border-radius:0 0 10px 10px; background:#0c1424; padding:1rem 1.1rem; min-height:280px; max-height:50vh; overflow-y:auto; line-height:1.7; font-size:.96rem; }
+  .editor:focus{ outline:none; border-color:var(--accent); }
+  .editor h3{ font-size:1.2rem; margin:1rem 0 .5rem; }
+  .editor p{ margin-bottom:.8rem; } .editor ul{ margin:0 0 .8rem 1.2rem; }
+  .editor img{ max-width:100%; border-radius:8px; display:block; }
+  .editor figure{ margin:1rem 0; } .editor figcaption{ color:var(--muted); font-size:.85rem; text-align:center; margin-top:.3rem; outline:1px dashed transparent; }
+  .editor figcaption:focus{ outline:1px dashed var(--accent); }
+  .editor blockquote{ border-left:3px solid var(--accent); padding-left:1rem; color:var(--muted); }
+  .hint{ font-size:.8rem; color:var(--muted); margin-top:.3rem; }
+  .cover-prev{ width:100%; max-height:160px; object-fit:cover; border-radius:10px; border:1px solid var(--line); margin-top:.5rem; display:none; }
+  @media(max-width:760px){ .app{ grid-template-columns:1fr; } .side{ position:static; height:auto; flex-direction:row; flex-wrap:wrap; } .side .foot{ width:100%; } .main{ padding:1.4rem; } }
+  .logo-img{ height:30px; width:auto; display:block; }
+  .login .logo-img{ height:34px; margin-bottom:1.1rem; }
+  .side .brand .logo-img{ height:26px; }
+</style>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- LOGIN -->
+<div class="login" id="login">
+  <div class="card">
+    <img class="logo-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQwIiBoZWlnaHQ9IjE2MCIgdmlld0JveD0iMCAwIDY0MCAxNjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xNTcuOTA3IDguNDc3MWUtMDZMMjEuNDE3IDBMMCAyMS43MDc5VjE2MEgxMzYuNDlMMTU3LjkwNyAxMzguMjkyVjguNDc3MWUtMDZaTTE0Ny4zNDMgMTM2LjI4MUwxMzQuNDkzIDE0OS4yOTRIMjMuNDE0QzE2LjMyMzMgMTQ5LjI5NCAxMC41NjM4IDE0My40NjggMTAuNTYzOCAxMzYuMjgxVjIzLjcxOUwyMy40MTQgMTAuNzA2MUgxMzQuNDkzQzE0MS41ODQgMTAuNzA2MSAxNDcuMzQzIDE2LjUzMjMgMTQ3LjM0MyAyMy43MTlWMTM2LjI4MVoiIGZpbGw9IiMxODU5RDYiLz4KPHBhdGggZD0iTTEzOC4wODEgODAuMTM5MUMxMjEuNzU4IDQyLjg3NDggODAuNjYwMiAxOS43NzY5IDgwLjY2MDIgMTkuNzc2OUgxMjQuNDJDMTMxLjk3NCAxOS43NzY5IDEzOC4wODEgMjUuOTg3NiAxMzguMDgxIDMzLjYxNzlDMTM4LjA4MSAzMy42MTc5IDEzOC4xOTcgODAuMzc1NyAxMzguMDgxIDgwLjEzOTFaIiBmaWxsPSIjMTg1OUQ2Ii8+CjxwYXRoIGQ9Ik0xMjkuNDU0IDE0MC4xNjNIMTI5LjMzOEgxMDkuMzExQzEwNS4yMyA0OS43ODIyIDE5LjY0ODQgNDcuNjgyNCAxOS42NDg0IDQ3LjY4MjRWMjYuNzEzOUMxOS42NDg0IDI2LjcxMzkgMTI0Ljk2OCAzMC41MjkgMTI5LjQ1NCAxNDAuMTkzVjE0MC4xNjNaIiBmaWxsPSIjMTg1OUQ2Ii8+CjxwYXRoIGQ9Ik05Mi40OTUzIDE0MC4xNjNIODIuNzQxOUg3MS4yMjNDNjguODc4NyA4Ny43MjY0IDE5LjY0ODQgODYuNTEzOCAxOS42NDg0IDg2LjUxMzhWNjUuNjA0NEMxOS42NDg0IDY1LjYwNDQgODYuNTkxMiA2NC4zMzI2IDkyLjQ5NTMgMTQwLjE2M1oiIGZpbGw9IiMxODU5RDYiLz4KPHBhdGggZD0iTTU3LjE2MDYgMTM5Ljk3Mkg1Ni45NThIMzMuMjU0NUMyNS42NDI4IDEzOS45NzIgMTkuNDQ5MiAxMzMuNzAyIDE5LjQ0OTIgMTI1Ljk4M1YxMDEuMDUyQzE5LjQ0OTIgMTAxLjA1MiA1NC42MTM3IDEwMS40MDcgNTcuMTMxNiAxMzkuOTcySDU3LjE2MDZaIiBmaWxsPSIjMTg1OUQ2Ii8+CjxwYXRoIGQ9Ik0yMDAuNTg3IDExNC41NjdWNDUuNzY1MUgyMjcuMTM4QzIzNC4wNzYgNDUuNzY1MSAyMzkuNDYyIDQ3LjQxNzUgMjQzLjI3IDUwLjczNTdDMjQ3LjA3OCA1NC4wNTM4IDI0OC45OTUgNTguNzMxMiAyNDguOTk1IDY0Ljc4MTFDMjQ4Ljk5NSA2OC42ODU2IDI0OC4xMzQgNzIuMDE3MSAyNDYuNDEzIDc0Ljc4ODlDMjQ0LjY5MSA3Ny41NjA2IDI0Mi4zMDUgNzkuNjY2MSAyMzkuMjUzIDgxLjEzMkMyMzYuMjAyIDgyLjU5NzggMjMyLjY2OCA4My4zMzA3IDIyOC42NTEgODMuMzMwN0wyMzAuNDY0IDgyLjI1MTNIMjMxLjgwN0MyMzQuNDE1IDgyLjI1MTMgMjM2LjczNyA4Mi44OTEgMjM4Ljc4NCA4NC4xNTY5QzI0MC44MTggODUuNDIyOSAyNDIuNDQ4IDg3LjU5NSAyNDMuNjQ4IDkwLjY0NjZMMjUzLjAxMiAxMTQuNTUzSDI0Ni41MTdMMjM3LjcyOCA5MS43MjZDMjM2LjUxNSA4OC40MDc5IDIzNC43NjcgODYuMjc1NyAyMzIuNDcyIDg1LjMyOTZDMjMwLjE3NyA4NC4zODM1IDIyNy4yNTYgODMuOTE3MSAyMjMuNjgzIDgzLjkxNzFIMjA2LjQ5NVYxMTQuNTUzSDIwMC41NzRMMjAwLjU4NyAxMTQuNTY3Wk0yMDYuNTA4IDc4Ljg1MzJIMjI2LjM2OUMyMzEuNzgxIDc4Ljg1MzIgMjM1LjkwMiA3Ny42NTM5IDIzOC43MzIgNzUuMjQxOUMyNDEuNTYyIDcyLjg0MzMgMjQyLjk4MyA2OS4zOTE5IDI0Mi45ODMgNjQuOTAxMUMyNDIuOTgzIDYwLjQxMDMgMjQxLjU2MiA1Ni44Nzg5IDIzOC43MzIgNTQuNTA2OUMyMzUuOTAyIDUyLjEzNDkgMjMxLjc4MSA1MC45NDg5IDIyNi4zNjkgNTAuOTQ4OUgyMDYuNTA4Vjc4Ljg1MzJWNzguODUzMloiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0yNjYuMjg1IDExNC41NjdWNDUuNzY1MUgzMDguMTA3VjUwLjkzNTZIMjcyLjAxVjc3LjA5NDJIMzA2LjAwOFY4Mi4yNjQ3SDI3Mi4wMVYxMDkuMzk2SDMwOC4xMDdWMTE0LjU2N0gyNjYuMjg1WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTMyMi4xMzkgMTE0LjU2N1Y0NS43NjUxSDM0My40MzRDMzUwLjgxNSA0NS43NjUxIDM1Ny4wNjIgNDcuMDg0NCAzNjIuMTQ4IDQ5LjcwOTZDMzY3LjIzNCA1Mi4zNDgxIDM3MS4xMDcgNTYuMjEyNiAzNzMuNzU0IDYxLjMxNjRDMzc2LjM4OSA2Ni40MjAyIDM3Ny43MTkgNzIuNjgzNCAzNzcuNzE5IDgwLjA5MjVDMzc3LjcxOSA4Ny41MDE3IDM3Ni40MDIgOTMuNzkxNSAzNzMuNzU0IDk4LjkyMkMzNzEuMTA3IDEwNC4wNjYgMzY3LjI0NyAxMDcuOTQ0IDM2Mi4xNDggMTEwLjU4MkMzNTcuMDQ5IDExMy4yMjEgMzUwLjgxNSAxMTQuNTI3IDM0My40MzQgMTE0LjUyN0gzMjIuMTM5VjExNC41NjdaTTMyOC4wNTkgMTA5LjE5NkgzNDIuOTUyQzM1Mi41NjMgMTA5LjE5NiAzNTkuNzIyIDEwNi43NzEgMzY0LjQzIDEwMS45MkMzNjkuMTM4IDk3LjA4MyAzNzEuNDk4IDg5LjgwNzEgMzcxLjQ5OCA4MC4xMDU5QzM3MS40OTggNzAuNDA0NiAzNjkuMTM4IDYzLjA2MjEgMzY0LjQzIDU4LjI1MTVDMzU5LjcyMiA1My40NDA4IDM1Mi41NjMgNTEuMDI4OCAzNDIuOTUyIDUxLjAyODhIMzI4LjA1OVYxMDkuMTk2VjEwOS4xOTZaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMzkyLjc5NSAxMTQuNTY3VjQ1Ljc2NTFINDM0LjYxN1Y1MC45MzU2SDM5OC41MlY3Ny4wOTQySDQzMi41MTdWODIuMjY0N0gzOTguNTJWMTA5LjM5Nkg0MzQuNjE3VjExNC41NjdIMzkyLjc5NVYxMTQuNTY3WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTQ0Ni42OTUgMTE0LjU2VjQ1LjQxMjZINDc4LjE3NkM0ODUuNzkyIDQ1LjQxMjYgNDkxLjU4MiA0Ny4zMDQ5IDQ5NS41NDYgNTEuMTAyN0M0OTkuNTExIDU0LjkwMDYgNTAxLjQ5MyA2MC4wNTc3IDUwMS40OTMgNjYuNjAwN0M1MDEuNDkzIDczLjE0MzcgNDk5LjUxMSA3OC4xNDA5IDQ5NS41NDYgODEuOTkyMUM0OTEuNTgyIDg1Ljg1NjYgNDg1Ljc5MiA4Ny43NzU1IDQ3OC4xNzYgODcuNzc1NUg0NjEuNjY2VjExNC41NDdINDQ2LjY5NVYxMTQuNTZaTTQ2MS42NjYgNzUuODIyMkg0NzYuNDQyQzQ4MC4wMjggNzUuODIyMiA0ODIuNjc1IDc1LjAyMjYgNDg0LjQwOSA3My40MjM1QzQ4Ni4xMzEgNzEuODI0NCA0ODcuMDA1IDY5LjUxOTEgNDg3LjAwNSA2Ni41MDc0QzQ4Ny4wMDUgNjMuNDk1OCA0ODYuMTQ0IDYxLjI5NyA0ODQuNDA5IDU5LjY4NDZDNDgyLjY3NSA1OC4wODU1IDQ4MC4wMjggNTcuMjg1OSA0NzYuNDQyIDU3LjI4NTlINDYxLjY2NlY3NS44MjIyVjc1LjgyMjJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNNTA5LjE2IDc5Ljk0OTJDNTA5LjE2IDcyLjc1MzIgNTEwLjUwMyA2Ni41MDM0IDUxMy4xOSA2MS4xNzNDNTE1Ljg3NiA1NS44NDI3IDUxOS42ODQgNTEuNzI1IDUyNC42MTQgNDguODJDNTI5LjU0MyA0NS45MTQ5IDUzNS40NjQgNDQuNDYyNCA1NDIuMzYyIDQ0LjQ2MjRDNTQ5LjI2MSA0NC40NjI0IDU1NS4xMTYgNDUuOTE0OSA1NjAuMDcyIDQ4LjgyQzU2NS4wMjcgNTEuNzI1IDU2OC44ODcgNTUuODU2IDU3MS42MzkgNjEuMTczQzU3NC4zOTEgNjYuNTAzNCA1NzUuNzYgNzIuNzI2NSA1NzUuNzYgNzkuODU1OUM1NzUuNzYgODYuOTg1MiA1NzQuNDA0IDkzLjMyODMgNTcxLjY3OCA5OC42ODUzQzU2OC45NTIgMTA0LjA0MiA1NjUuMTA1IDEwOC4yIDU2MC4xMTEgMTExLjE0NUM1NTUuMTE2IDExNC4wOSA1NDkuMTk2IDExNS41NTYgNTQyLjM2MiAxMTUuNTU2QzUzNS41MjkgMTE1LjU1NiA1MjkuNjA4IDExNC4wOSA1MjQuNjUzIDExMS4xNDVDNTE5LjY5NyAxMDguMiA1MTUuODc2IDEwNC4wNTYgNTEzLjE5IDk4LjY4NTNDNTEwLjUwMyA5My4zMjgzIDUwOS4xNiA4Ny4wNzg1IDUwOS4xNiA3OS45NjI1Vjc5Ljk0OTJaTTUyNC44MDkgNzkuOTQ5MkM1MjQuODA5IDg3LjA3ODUgNTI2LjI4MyA5Mi42NDg3IDUyOS4yMyA5Ni42NzMxQzUzMi4xNzcgMTAwLjY5OCA1MzYuNTU5IDEwMi43MSA1NDIuMzc1IDEwMi43MUM1NDguMTkxIDEwMi43MSA1NTIuNTIxIDEwMC42OTggNTU1LjUyIDk2LjY3MzFDNTU4LjUzMyA5Mi42NDg3IDU2MC4wMzMgODcuMDc4NSA1NjAuMDMzIDc5Ljk0OTJDNTYwLjAzMyA3Mi44MTk4IDU1OC41NDYgNjcuMTgzIDU1NS41NzMgNjMuMjI1MkM1NTIuNTk5IDU5LjI2NzQgNTQ4LjE5MSA1Ny4yOTUyIDU0Mi4zNzUgNTcuMjk1MkM1MzYuNTU5IDU3LjI5NTIgNTMyLjE2NCA1OS4yNjc0IDUyOS4yMyA2My4yMjUyQzUyNi4yODMgNjcuMTgzIDUyNC44MDkgNzIuNzUzMiA1MjQuODA5IDc5Ljk0OTJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNNjEyLjAzOCAxMTUuNTM4QzYwNi41MzQgMTE1LjUzOCA2MDEuNDIyIDExNC44NzEgNTk2LjY4OSAxMTMuNTI2QzU5MS45NTUgMTEyLjE4IDU4Ny45MjUgMTEwLjMwMSA1ODQuNiAxMDcuODg5TDU4OS4wMDcgOTYuMDI4N0M1OTEuMTg1IDk3LjQ2NzkgNTkzLjQ2NyA5OC42OTM5IDU5NS44NjcgOTkuNzA2N0M1OTguMjY2IDEwMC43MTkgNjAwLjgyMiAxMDEuNTA2IDYwMy41NDggMTAyLjA2NUM2MDYuMjYxIDEwMi42MjUgNjA5LjA5IDEwMi45MDUgNjEyLjAzOCAxMDIuOTA1QzYxNi42NDEgMTAyLjkwNSA2MTkuOTI3IDEwMi4xOTkgNjIxLjg3IDEwMC43OTlDNjIzLjgyNyA5OS40MDAyIDYyNC43OTIgOTcuNTQ3OSA2MjQuNzkyIDk1LjI1NThDNjI0Ljc5MiA5My4yMzAzIDYyNC4xNTMgOTEuNjk3OCA2MjIuODc1IDkwLjY0NTFDNjIxLjU5NyA4OS41OTIzIDYxOS4xNTggODguNzEyOCA2MTUuNTg1IDg3Ljk5MzJMNjA0LjQ0OCA4NS42MzQ2QzU5OC4yNCA4NC4zMjg2IDU5My41ODUgODIuMDg5OSA1OTAuNDgxIDc4LjkxODNDNTg3LjM3NyA3NS43NDY4IDU4NS44MjUgNzEuNTQ5MSA1ODUuODI1IDY2LjMxMjFDNTg1LjgyNSA2MS45Mjc5IDU4Ni45ODYgNTguMDkgNTg5LjMzMyA1NC43ODUyQzU5MS42NjggNTEuNDgwNCA1OTQuOTI4IDQ4LjkzNTEgNTk5LjEyNyA0Ny4xMzYyQzYwMy4zMTMgNDUuMzM3MiA2MDguMjA0IDQ0LjQ0NDMgNjEzLjc1OSA0NC40NDQzQzYxOC41NTggNDQuNDQ0MyA2MjMuMDMxIDQ1LjEyNCA2MjcuMTkxIDQ2LjQ5NjVDNjMxLjM1MSA0Ny44NjkxIDYzNC43NjggNDkuNzYxNCA2MzcuNDU0IDUyLjE4NjdMNjMzLjEzOCA2My41NjY5QzYzMC40NTEgNjEuMzQxNSA2MjcuNDkxIDU5LjcxNTggNjI0LjI1NyA1OC42NjNDNjIxLjAyMyA1Ny42MTAzIDYxNy40MjMgNTcuMDkwNiA2MTMuNDU5IDU3LjA5MDZDNjA5LjI5OSA1Ny4wOTA2IDYwNi4xMTcgNTcuODEwMiA2MDMuOTEzIDU5LjI0OTRDNjAxLjcwOSA2MC42ODg2IDYwMC42MDEgNjIuNzQwNyA2MDAuNjAxIDY1LjQzMjZDNjAwLjYwMSA2Ny4zOTE1IDYwMS4yNzkgNjguOTkwNiA2MDIuNjIyIDcwLjI0MzJDNjAzLjk2NSA3MS40OTU4IDYwNi4zMjYgNzIuNDI4NiA2MDkuNzI5IDczLjA4MTZMNjIwLjk1OCA3NS4zMzM3QzYyNy4yMyA3Ni42Mzk2IDYzMS45MTIgNzguODI1IDYzNS4wMTYgODEuOTAzM0M2MzguMTE5IDg0Ljk4MTYgNjM5LjY3MSA4OS4wNTkzIDYzOS42NzEgOTQuMTYzMUM2MzkuNjcxIDk4LjQxNDEgNjM4LjUyNCAxMDIuMTU5IDYzNi4yMTUgMTA1LjM5N0M2MzMuOTA3IDEwOC42MzUgNjMwLjY5OSAxMTEuMTQgNjI2LjU2NSAxMTIuODk5QzYyMi40MzEgMTE0LjY1OCA2MTcuNTkzIDExNS41NTEgNjEyLjAyNSAxMTUuNTUxTDYxMi4wMzggMTE1LjUzOFoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=" alt="RedePOS">
+    <h1>Painel RedePOS</h1>
+    <p class="sub">Acesso restrito. Entre com seu e-mail e senha.</p>
+    <div class="field"><label>E-mail</label><input type="email" id="email" placeholder="voce@redepos.com.br" /></div>
+    <div class="field"><label>Senha</label><input type="password" id="senha" placeholder="••••••••" /></div>
+    <button class="btn btn-primary" id="btnLogin" style="width:100%; justify-content:center;">Entrar</button>
+    <p class="msg" id="loginMsg"></p>
+    <p class="hint" style="margin-top:1rem;">Esqueceu a senha? Peça um link de redefinição: <a href="#" id="btnReset">enviar link</a></p>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app" id="app" hidden>
+  <aside class="side">
+    <div class="brand"><img class="logo-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQwIiBoZWlnaHQ9IjE2MCIgdmlld0JveD0iMCAwIDY0MCAxNjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xNTcuOTA3IDguNDc3MWUtMDZMMjEuNDE3IDBMMCAyMS43MDc5VjE2MEgxMzYuNDlMMTU3LjkwNyAxMzguMjkyVjguNDc3MWUtMDZaTTE0Ny4zNDMgMTM2LjI4MUwxMzQuNDkzIDE0OS4yOTRIMjMuNDE0QzE2LjMyMzMgMTQ5LjI5NCAxMC41NjM4IDE0My40NjggMTAuNTYzOCAxMzYuMjgxVjIzLjcxOUwyMy40MTQgMTAuNzA2MUgxMzQuNDkzQzE0MS41ODQgMTAuNzA2MSAxNDcuMzQzIDE2LjUzMjMgMTQ3LjM0MyAyMy43MTlWMTM2LjI4MVoiIGZpbGw9IiMxODU5RDYiLz4KPHBhdGggZD0iTTEzOC4wODEgODAuMTM5MUMxMjEuNzU4IDQyLjg3NDggODAuNjYwMiAxOS43NzY5IDgwLjY2MDIgMTkuNzc2OUgxMjQuNDJDMTMxLjk3NCAxOS43NzY5IDEzOC4wODEgMjUuOTg3NiAxMzguMDgxIDMzLjYxNzlDMTM4LjA4MSAzMy42MTc5IDEzOC4xOTcgODAuMzc1NyAxMzguMDgxIDgwLjEzOTFaIiBmaWxsPSIjMTg1OUQ2Ii8+CjxwYXRoIGQ9Ik0xMjkuNDU0IDE0MC4xNjNIMTI5LjMzOEgxMDkuMzExQzEwNS4yMyA0OS43ODIyIDE5LjY0ODQgNDcuNjgyNCAxOS42NDg0IDQ3LjY4MjRWMjYuNzEzOUMxOS42NDg0IDI2LjcxMzkgMTI0Ljk2OCAzMC41MjkgMTI5LjQ1NCAxNDAuMTkzVjE0MC4xNjNaIiBmaWxsPSIjMTg1OUQ2Ii8+CjxwYXRoIGQ9Ik05Mi40OTUzIDE0MC4xNjNIODIuNzQxOUg3MS4yMjNDNjguODc4NyA4Ny43MjY0IDE5LjY0ODQgODYuNTEzOCAxOS42NDg0IDg2LjUxMzhWNjUuNjA0NEMxOS42NDg0IDY1LjYwNDQgODYuNTkxMiA2NC4zMzI2IDkyLjQ5NTMgMTQwLjE2M1oiIGZpbGw9IiMxODU5RDYiLz4KPHBhdGggZD0iTTU3LjE2MDYgMTM5Ljk3Mkg1Ni45NThIMzMuMjU0NUMyNS42NDI4IDEzOS45NzIgMTkuNDQ5MiAxMzMuNzAyIDE5LjQ0OTIgMTI1Ljk4M1YxMDEuMDUyQzE5LjQ0OTIgMTAxLjA1MiA1NC42MTM3IDEwMS40MDcgNTcuMTMxNiAxMzkuOTcySDU3LjE2MDZaIiBmaWxsPSIjMTg1OUQ2Ii8+CjxwYXRoIGQ9Ik0yMDAuNTg3IDExNC41NjdWNDUuNzY1MUgyMjcuMTM4QzIzNC4wNzYgNDUuNzY1MSAyMzkuNDYyIDQ3LjQxNzUgMjQzLjI3IDUwLjczNTdDMjQ3LjA3OCA1NC4wNTM4IDI0OC45OTUgNTguNzMxMiAyNDguOTk1IDY0Ljc4MTFDMjQ4Ljk5NSA2OC42ODU2IDI0OC4xMzQgNzIuMDE3MSAyNDYuNDEzIDc0Ljc4ODlDMjQ0LjY5MSA3Ny41NjA2IDI0Mi4zMDUgNzkuNjY2MSAyMzkuMjUzIDgxLjEzMkMyMzYuMjAyIDgyLjU5NzggMjMyLjY2OCA4My4zMzA3IDIyOC42NTEgODMuMzMwN0wyMzAuNDY0IDgyLjI1MTNIMjMxLjgwN0MyMzQuNDE1IDgyLjI1MTMgMjM2LjczNyA4Mi44OTEgMjM4Ljc4NCA4NC4xNTY5QzI0MC44MTggODUuNDIyOSAyNDIuNDQ4IDg3LjU5NSAyNDMuNjQ4IDkwLjY0NjZMMjUzLjAxMiAxMTQuNTUzSDI0Ni41MTdMMjM3LjcyOCA5MS43MjZDMjM2LjUxNSA4OC40MDc5IDIzNC43NjcgODYuMjc1NyAyMzIuNDcyIDg1LjMyOTZDMjMwLjE3NyA4NC4zODM1IDIyNy4yNTYgODMuOTE3MSAyMjMuNjgzIDgzLjkxNzFIMjA2LjQ5NVYxMTQuNTUzSDIwMC41NzRMMjAwLjU4NyAxMTQuNTY3Wk0yMDYuNTA4IDc4Ljg1MzJIMjI2LjM2OUMyMzEuNzgxIDc4Ljg1MzIgMjM1LjkwMiA3Ny42NTM5IDIzOC43MzIgNzUuMjQxOUMyNDEuNTYyIDcyLjg0MzMgMjQyLjk4MyA2OS4zOTE5IDI0Mi45ODMgNjQuOTAxMUMyNDIuOTgzIDYwLjQxMDMgMjQxLjU2MiA1Ni44Nzg5IDIzOC43MzIgNTQuNTA2OUMyMzUuOTAyIDUyLjEzNDkgMjMxLjc4MSA1MC45NDg5IDIyNi4zNjkgNTAuOTQ4OUgyMDYuNTA4Vjc4Ljg1MzJWNzguODUzMloiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0yNjYuMjg1IDExNC41NjdWNDUuNzY1MUgzMDguMTA3VjUwLjkzNTZIMjcyLjAxVjc3LjA5NDJIMzA2LjAwOFY4Mi4yNjQ3SDI3Mi4wMVYxMDkuMzk2SDMwOC4xMDdWMTE0LjU2N0gyNjYuMjg1WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTMyMi4xMzkgMTE0LjU2N1Y0NS43NjUxSDM0My40MzRDMzUwLjgxNSA0NS43NjUxIDM1Ny4wNjIgNDcuMDg0NCAzNjIuMTQ4IDQ5LjcwOTZDMzY3LjIzNCA1Mi4zNDgxIDM3MS4xMDcgNTYuMjEyNiAzNzMuNzU0IDYxLjMxNjRDMzc2LjM4OSA2Ni40MjAyIDM3Ny43MTkgNzIuNjgzNCAzNzcuNzE5IDgwLjA5MjVDMzc3LjcxOSA4Ny41MDE3IDM3Ni40MDIgOTMuNzkxNSAzNzMuNzU0IDk4LjkyMkMzNzEuMTA3IDEwNC4wNjYgMzY3LjI0NyAxMDcuOTQ0IDM2Mi4xNDggMTEwLjU4MkMzNTcuMDQ5IDExMy4yMjEgMzUwLjgxNSAxMTQuNTI3IDM0My40MzQgMTE0LjUyN0gzMjIuMTM5VjExNC41NjdaTTMyOC4wNTkgMTA5LjE5NkgzNDIuOTUyQzM1Mi41NjMgMTA5LjE5NiAzNTkuNzIyIDEwNi43NzEgMzY0LjQzIDEwMS45MkMzNjkuMTM4IDk3LjA4MyAzNzEuNDk4IDg5LjgwNzEgMzcxLjQ5OCA4MC4xMDU5QzM3MS40OTggNzAuNDA0NiAzNjkuMTM4IDYzLjA2MjEgMzY0LjQzIDU4LjI1MTVDMzU5LjcyMiA1My40NDA4IDM1Mi41NjMgNTEuMDI4OCAzNDIuOTUyIDUxLjAyODhIMzI4LjA1OVYxMDkuMTk2VjEwOS4xOTZaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMzkyLjc5NSAxMTQuNTY3VjQ1Ljc2NTFINDM0LjYxN1Y1MC45MzU2SDM5OC41MlY3Ny4wOTQySDQzMi41MTdWODIuMjY0N0gzOTguNTJWMTA5LjM5Nkg0MzQuNjE3VjExNC41NjdIMzkyLjc5NVYxMTQuNTY3WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTQ0Ni42OTUgMTE0LjU2VjQ1LjQxMjZINDc4LjE3NkM0ODUuNzkyIDQ1LjQxMjYgNDkxLjU4MiA0Ny4zMDQ5IDQ5NS41NDYgNTEuMTAyN0M0OTkuNTExIDU0LjkwMDYgNTAxLjQ5MyA2MC4wNTc3IDUwMS40OTMgNjYuNjAwN0M1MDEuNDkzIDczLjE0MzcgNDk5LjUxMSA3OC4xNDA5IDQ5NS41NDYgODEuOTkyMUM0OTEuNTgyIDg1Ljg1NjYgNDg1Ljc5MiA4Ny43NzU1IDQ3OC4xNzYgODcuNzc1NUg0NjEuNjY2VjExNC41NDdINDQ2LjY5NVYxMTQuNTZaTTQ2MS42NjYgNzUuODIyMkg0NzYuNDQyQzQ4MC4wMjggNzUuODIyMiA0ODIuNjc1IDc1LjAyMjYgNDg0LjQwOSA3My40MjM1QzQ4Ni4xMzEgNzEuODI0NCA0ODcuMDA1IDY5LjUxOTEgNDg3LjAwNSA2Ni41MDc0QzQ4Ny4wMDUgNjMuNDk1OCA0ODYuMTQ0IDYxLjI5NyA0ODQuNDA5IDU5LjY4NDZDNDgyLjY3NSA1OC4wODU1IDQ4MC4wMjggNTcuMjg1OSA0NzYuNDQyIDU3LjI4NTlINDYxLjY2NlY3NS44MjIyVjc1LjgyMjJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNNTA5LjE2IDc5Ljk0OTJDNTA5LjE2IDcyLjc1MzIgNTEwLjUwMyA2Ni41MDM0IDUxMy4xOSA2MS4xNzNDNTE1Ljg3NiA1NS44NDI3IDUxOS42ODQgNTEuNzI1IDUyNC42MTQgNDguODJDNTI5LjU0MyA0NS45MTQ5IDUzNS40NjQgNDQuNDYyNCA1NDIuMzYyIDQ0LjQ2MjRDNTQ5LjI2MSA0NC40NjI0IDU1NS4xMTYgNDUuOTE0OSA1NjAuMDcyIDQ4LjgyQzU2NS4wMjcgNTEuNzI1IDU2OC44ODcgNTUuODU2IDU3MS42MzkgNjEuMTczQzU3NC4zOTEgNjYuNTAzNCA1NzUuNzYgNzIuNzI2NSA1NzUuNzYgNzkuODU1OUM1NzUuNzYgODYuOTg1MiA1NzQuNDA0IDkzLjMyODMgNTcxLjY3OCA5OC42ODUzQzU2OC45NTIgMTA0LjA0MiA1NjUuMTA1IDEwOC4yIDU2MC4xMTEgMTExLjE0NUM1NTUuMTE2IDExNC4wOSA1NDkuMTk2IDExNS41NTYgNTQyLjM2MiAxMTUuNTU2QzUzNS41MjkgMTE1LjU1NiA1MjkuNjA4IDExNC4wOSA1MjQuNjUzIDExMS4xNDVDNTE5LjY5NyAxMDguMiA1MTUuODc2IDEwNC4wNTYgNTEzLjE5IDk4LjY4NTNDNTEwLjUwMyA5My4zMjgzIDUwOS4xNiA4Ny4wNzg1IDUwOS4xNiA3OS45NjI1Vjc5Ljk0OTJaTTUyNC44MDkgNzkuOTQ5MkM1MjQuODA5IDg3LjA3ODUgNTI2LjI4MyA5Mi42NDg3IDUyOS4yMyA5Ni42NzMxQzUzMi4xNzcgMTAwLjY5OCA1MzYuNTU5IDEwMi43MSA1NDIuMzc1IDEwMi43MUM1NDguMTkxIDEwMi43MSA1NTIuNTIxIDEwMC42OTggNTU1LjUyIDk2LjY3MzFDNTU4LjUzMyA5Mi42NDg3IDU2MC4wMzMgODcuMDc4NSA1NjAuMDMzIDc5Ljk0OTJDNTYwLjAzMyA3Mi44MTk4IDU1OC41NDYgNjcuMTgzIDU1NS41NzMgNjMuMjI1MkM1NTIuNTk5IDU5LjI2NzQgNTQ4LjE5MSA1Ny4yOTUyIDU0Mi4zNzUgNTcuMjk1MkM1MzYuNTU5IDU3LjI5NTIgNTMyLjE2NCA1OS4yNjc0IDUyOS4yMyA2My4yMjUyQzUyNi4yODMgNjcuMTgzIDUyNC44MDkgNzIuNzUzMiA1MjQuODA5IDc5Ljk0OTJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNNjEyLjAzOCAxMTUuNTM4QzYwNi41MzQgMTE1LjUzOCA2MDEuNDIyIDExNC44NzEgNTk2LjY4OSAxMTMuNTI2QzU5MS45NTUgMTEyLjE4IDU4Ny45MjUgMTEwLjMwMSA1ODQuNiAxMDcuODg5TDU4OS4wMDcgOTYuMDI4N0M1OTEuMTg1IDk3LjQ2NzkgNTkzLjQ2NyA5OC42OTM5IDU5NS44NjcgOTkuNzA2N0M1OTguMjY2IDEwMC43MTkgNjAwLjgyMiAxMDEuNTA2IDYwMy41NDggMTAyLjA2NUM2MDYuMjYxIDEwMi42MjUgNjA5LjA5IDEwMi45MDUgNjEyLjAzOCAxMDIuOTA1QzYxNi42NDEgMTAyLjkwNSA2MTkuOTI3IDEwMi4xOTkgNjIxLjg3IDEwMC43OTlDNjIzLjgyNyA5OS40MDAyIDYyNC43OTIgOTcuNTQ3OSA2MjQuNzkyIDk1LjI1NThDNjI0Ljc5MiA5My4yMzAzIDYyNC4xNTMgOTEuNjk3OCA2MjIuODc1IDkwLjY0NTFDNjIxLjU5NyA4OS41OTIzIDYxOS4xNTggODguNzEyOCA2MTUuNTg1IDg3Ljk5MzJMNjA0LjQ0OCA4NS42MzQ2QzU5OC4yNCA4NC4zMjg2IDU5My41ODUgODIuMDg5OSA1OTAuNDgxIDc4LjkxODNDNTg3LjM3NyA3NS43NDY4IDU4NS44MjUgNzEuNTQ5MSA1ODUuODI1IDY2LjMxMjFDNTg1LjgyNSA2MS45Mjc5IDU4Ni45ODYgNTguMDkgNTg5LjMzMyA1NC43ODUyQzU5MS42NjggNTEuNDgwNCA1OTQuOTI4IDQ4LjkzNTEgNTk5LjEyNyA0Ny4xMzYyQzYwMy4zMTMgNDUuMzM3MiA2MDguMjA0IDQ0LjQ0NDMgNjEzLjc1OSA0NC40NDQzQzYxOC41NTggNDQuNDQ0MyA2MjMuMDMxIDQ1LjEyNCA2MjcuMTkxIDQ2LjQ5NjVDNjMxLjM1MSA0Ny44NjkxIDYzNC43NjggNDkuNzYxNCA2MzcuNDU0IDUyLjE4NjdMNjMzLjEzOCA2My41NjY5QzYzMC40NTEgNjEuMzQxNSA2MjcuNDkxIDU5LjcxNTggNjI0LjI1NyA1OC42NjNDNjIxLjAyMyA1Ny42MTAzIDYxNy40MjMgNTcuMDkwNiA2MTMuNDU5IDU3LjA5MDZDNjA5LjI5OSA1Ny4wOTA2IDYwNi4xMTcgNTcuODEwMiA2MDMuOTEzIDU5LjI0OTRDNjAxLjcwOSA2MC42ODg2IDYwMC42MDEgNjIuNzQwNyA2MDAuNjAxIDY1LjQzMjZDNjAwLjYwMSA2Ny4zOTE1IDYwMS4yNzkgNjguOTkwNiA2MDIuNjIyIDcwLjI0MzJDNjAzLjk2NSA3MS40OTU4IDYwNi4zMjYgNzIuNDI4NiA2MDkuNzI5IDczLjA4MTZMNjIwLjk1OCA3NS4zMzM3QzYyNy4yMyA3Ni42Mzk2IDYzMS45MTIgNzguODI1IDYzNS4wMTYgODEuOTAzM0M2MzguMTE5IDg0Ljk4MTYgNjM5LjY3MSA4OS4wNTkzIDYzOS42NzEgOTQuMTYzMUM2MzkuNjcxIDk4LjQxNDEgNjM4LjUyNCAxMDIuMTU5IDYzNi4yMTUgMTA1LjM5N0M2MzMuOTA3IDEwOC42MzUgNjMwLjY5OSAxMTEuMTQgNjI2LjU2NSAxMTIuODk5QzYyMi40MzEgMTE0LjY1OCA2MTcuNTkzIDExNS41NTEgNjEyLjAyNSAxMTUuNTUxTDYxMi4wMzggMTE1LjUzOFoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=" alt="RedePOS"></div>
+    <button class="navbtn" data-view="posts">Posts</button>
+    <button class="navbtn" data-view="autores">Autores</button>
+    <button class="navbtn" data-view="vagas">Vagas</button>
+    <button class="navbtn" data-view="redes_sociais">Redes sociais</button>
+    <button class="navbtn" data-view="form_assuntos">Assuntos do form</button>
+    <button class="navbtn" data-view="form_campos">Campos do form</button>
+    <button class="navbtn" data-view="config">Configurações</button>
+    <button class="navbtn" data-view="usuarios" id="navUsuarios" style="display:none;">Usuários</button>
+    <div class="foot">
+      <div id="whoami"></div>
+      <button class="btn btn-ghost btn-sm" id="btnLogout" style="margin-top:.6rem;">Sair</button>
+    </div>
+  </aside>
+  <main class="main"><div id="view"></div></main>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="bg" data-close></div>
+  <div class="sheet" id="sheet"></div>
+</div>
+
+<script>
+const SB_URL  = 'https://ahhwkhccnpoqvvhgeyki.supabase.co';
+const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoaHdraGNjbnBvcXZ2aGdleWtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzODUzMjgsImV4cCI6MjA5Njk2MTMyOH0.s0qotGn7OdbFTZxiIo1nj-t2e7GUwzePGrvyYX4JqGk';
+const sb = supabase.createClient(SB_URL, SB_ANON);
+
+let ME = null; // { id, role, nome }
+
+const $ = s => document.querySelector(s);
+const el = (h) => { const t=document.createElement('template'); t.innerHTML=h.trim(); return t.content.firstChild; };
+const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+// ---------- recursos genéricos ----------
+const RES = {
+  autores: { table:'autores', title:'Autores', list:['nome','cargo'], order:'nome',
+    fields:[{k:'nome',l:'Nome',t:'text',req:1},{k:'cargo',l:'Cargo',t:'text'},{k:'linkedin_url',l:'LinkedIn (URL)',t:'text'},{k:'avatar_url',l:'Avatar (cole uma URL ou envie uma imagem)',t:'text',upload:1}] },
+  vagas: { table:'vagas', title:'Vagas', list:['titulo','ativo'], order:'ordem',
+    fields:[{k:'titulo',l:'Título',t:'text',req:1},{k:'tags',l:'Tags (uma por linha)',t:'tags'},{k:'link',l:'Link do formulário da vaga',t:'text'},{k:'ativo',l:'Ativa (aparece no site)',t:'bool'},{k:'ordem',l:'Ordem',t:'number'}] },
+  redes_sociais: { table:'redes_sociais', title:'Redes sociais', list:['rede','ativo'], order:'ordem',
+    fields:[{k:'rede',l:'Rede',t:'select',opts:['linkedin','instagram','facebook','x','youtube','tiktok','whatsapp','email']},{k:'ativo',l:'Ativa',t:'bool'},{k:'url',l:'URL / @ / telefone / e-mail',t:'text'},{k:'ordem',l:'Ordem',t:'number'}] },
+  form_assuntos: { table:'form_assuntos', title:'Assuntos do formulário', list:['assunto'], order:'ordem',
+    fields:[{k:'assunto',l:'Assunto',t:'text',req:1},{k:'ordem',l:'Ordem',t:'number'}] },
+  form_campos: { table:'form_campos', title:'Campos do formulário', list:['label','tipo'], order:'ordem',
+    fields:[{k:'label',l:'Rótulo',t:'text',req:1},{k:'name',l:'Nome técnico (sem espaços/acentos)',t:'text',req:1},{k:'tipo',l:'Tipo',t:'select',opts:['text','email','tel','textarea']},{k:'obrigatorio',l:'Obrigatório',t:'bool'},{k:'placeholder',l:'Placeholder',t:'text'},{k:'ordem',l:'Ordem',t:'number'}] },
+};
+
+// ---------- auth ----------
+async function init(){
+  const { data:{ session } } = await sb.auth.getSession();
+  if (session) await onLogged(session.user); else showLogin();
+  sb.auth.onAuthStateChange((_e, s) => { if (!s) showLogin(); });
+}
+function showLogin(){ $('#app').hidden = true; $('#login').style.display = 'grid'; }
+async function onLogged(user){
+  const { data: perfil } = await sb.from('perfis').select('role,nome').eq('id', user.id).single();
+  if (!perfil){
+    $('#loginMsg').className='msg err';
+    $('#loginMsg').textContent='Login ok, mas seu usuário não tem perfil de acesso. Peça ao super admin pra te cadastrar.';
+    await sb.auth.signOut(); return;
+  }
+  ME = { id:user.id, role:perfil.role, nome:perfil.nome || user.email };
+  $('#login').style.display='none'; $('#app').hidden=false;
+  $('#whoami').innerHTML = esc(ME.nome) + '<br><span style="color:var(--accent)">'+(ME.role==='super_admin'?'super admin':'editor')+'</span>';
+  $('#navUsuarios').style.display = ME.role==='super_admin' ? '' : 'none';
+  go('posts');
+}
+$('#btnLogin').onclick = async () => {
+  const m=$('#loginMsg'); m.className='msg'; m.textContent='Entrando…';
+  const { data, error } = await sb.auth.signInWithPassword({ email:$('#email').value.trim(), password:$('#senha').value });
+  if (error){ m.className='msg err'; m.textContent=error.message; return; }
+  onLogged(data.user);
+};
+$('#senha').addEventListener('keydown', e => { if(e.key==='Enter') $('#btnLogin').click(); });
+$('#btnReset').onclick = async (e) => {
+  e.preventDefault(); const m=$('#loginMsg');
+  const email=$('#email').value.trim(); if(!email){ m.className='msg err'; m.textContent='Digite o e-mail acima primeiro.'; return; }
+  const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.href });
+  m.className = error?'msg err':'msg ok'; m.textContent = error? error.message : 'Link de redefinição enviado pro seu e-mail.';
+};
+$('#btnLogout').onclick = async () => { await sb.auth.signOut(); location.reload(); };
+
+// ---------- navegação ----------
+document.querySelectorAll('.navbtn').forEach(b => b.onclick = () => go(b.dataset.view));
+function go(view){
+  document.querySelectorAll('.navbtn').forEach(b => b.classList.toggle('active', b.dataset.view===view));
+  if (view==='posts') return viewPosts();
+  if (view==='config') return viewConfig();
+  if (view==='usuarios') return viewUsuarios();
+  return viewResource(view);
+}
+
+// ---------- modal ----------
+const modal = $('#modal');
+modal.querySelector('[data-close]').onclick = closeModal;
+function openModal(html){ $('#sheet').innerHTML = html; modal.classList.add('open'); }
+function closeModal(){ modal.classList.remove('open'); $('#sheet').innerHTML=''; }
+
+// ---------- CRUD genérico ----------
+async function viewResource(name){
+  const R = RES[name];
+  $('#view').innerHTML = `<div class="head"><h2>${R.title}</h2><button class="btn btn-primary" id="novo">+ Novo</button></div><div id="list"><p class="empty">Carregando…</p></div>`;
+  $('#novo').onclick = () => formResource(name, null);
+  const { data, error } = await sb.from(R.table).select('*').order(R.order, { ascending:true });
+  if (error){ $('#list').innerHTML = `<p class="empty">Erro: ${esc(error.message)}</p>`; return; }
+  if (!data.length){ $('#list').innerHTML = `<p class="empty">Nada por aqui ainda.</p>`; return; }
+  const cols = R.list;
+  $('#list').innerHTML = `<table><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}<th></th></tr></thead><tbody>${
+    data.map(row => `<tr data-id="${row.id}">${cols.map(c=>`<td>${cellVal(row[c])}</td>`).join('')}
+      <td style="text-align:right; white-space:nowrap;">
+        <button class="btn btn-ghost btn-sm" data-edit>Editar</button>
+        <button class="btn btn-ghost btn-sm danger" data-del>Excluir</button></td></tr>`).join('')
+  }</tbody></table>`;
+  $('#list').querySelectorAll('tr[data-id]').forEach(tr => {
+    const id = tr.dataset.id;
+    tr.querySelector('[data-edit]').onclick = () => formResource(name, data.find(r=>String(r.id)===String(id)));
+    tr.querySelector('[data-del]').onclick = async () => {
+      if (!confirm('Excluir este item?')) return;
+      const { error } = await sb.from(R.table).delete().eq('id', id);
+      if (error) alert(error.message); else viewResource(name);
+    };
+  });
+}
+function cellVal(v){
+  if (v===true) return '<span class="dot on"></span> sim';
+  if (v===false) return '<span class="dot off"></span> não';
+  if (Array.isArray(v)) return v.map(x=>`<span class="tag-pill">${esc(x)}</span>`).join(' ');
+  return esc(v);
+}
+function formResource(name, row){
+  const R = RES[name]; const editing = !!row;
+  const inputs = R.fields.map(f => fieldHTML(f, row?row[f.k]:undefined)).join('');
+  openModal(`<h3>${editing?'Editar':'Novo'} — ${R.title}</h3>${inputs}
+    <div class="actions">${editing?'<button class="btn btn-ghost btn-sm danger" id="del">Excluir</button>':''}
+      <div class="spacer"></div><button class="btn btn-ghost" data-cancel>Cancelar</button>
+      <button class="btn btn-primary" id="save">Salvar</button></div><p class="msg" id="fmsg"></p>`);
+  $('#sheet [data-cancel]').onclick = closeModal;
+  R.fields.filter(f => f.upload).forEach(f => {
+    const file = $('#f_'+f.k+'_file'), txt = $('#f_'+f.k), prev = $('#f_'+f.k+'_prev');
+    if (!file) return;
+    file.onchange = async (e) => {
+      const fl = e.target.files[0]; if (!fl) return;
+      const m = $('#fmsg'); m.className='msg'; m.textContent='Enviando imagem…';
+      try { const url = await uploadImg(fl); txt.value = url; if (prev){ prev.src = url; prev.style.display='block'; } m.textContent=''; }
+      catch (err){ m.className='msg err'; m.textContent='Falha no upload: '+err.message; }
+    };
+  });
+  if (editing) $('#del').onclick = async () => { if(!confirm('Excluir?')) return; await sb.from(R.table).delete().eq('id',row.id); closeModal(); viewResource(name); };
+  $('#save').onclick = async () => {
+    const payload = {};
+    for (const f of R.fields){ payload[f.k] = readField(f); }
+    const m=$('#fmsg'); m.className='msg'; m.textContent='Salvando…';
+    const q = editing ? sb.from(R.table).update(payload).eq('id', row.id) : sb.from(R.table).insert(payload);
+    const { error } = await q;
+    if (error){ m.className='msg err'; m.textContent=error.message; return; }
+    closeModal(); viewResource(name);
+  };
+}
+function fieldHTML(f, val){
+  const id = 'f_'+f.k;
+  if (f.upload) return `<div class="field"><label>${f.l}</label><input type="text" id="${id}" value="${esc(val)}"><div class="row" style="margin-top:.45rem"><input type="file" accept="image/*" id="${id}_file"></div><img id="${id}_prev" class="cover-prev" src="${esc(val)}" ${val?'style="display:block"':''}></div>`;
+  if (f.t==='bool') return `<div class="field row"><input type="checkbox" id="${id}" ${val?'checked':''} style="width:auto"> <label for="${id}" style="margin:0">${f.l}</label></div>`;
+  if (f.t==='textarea') return `<div class="field"><label>${f.l}</label><textarea id="${id}">${esc(val)}</textarea></div>`;
+  if (f.t==='tags') return `<div class="field"><label>${f.l}</label><textarea id="${id}">${(Array.isArray(val)?val:[]).map(esc).join('\n')}</textarea></div>`;
+  if (f.t==='select') return `<div class="field"><label>${f.l}</label><select id="${id}">${f.opts.map(o=>`<option ${o===val?'selected':''}>${o}</option>`).join('')}</select></div>`;
+  const type = f.t==='number'?'number':(f.t==='date'?'date':'text');
+  return `<div class="field"><label>${f.l}</label><input type="${type}" id="${id}" value="${esc(val)}"></div>`;
+}
+function readField(f){
+  const e = $('#f_'+f.k);
+  if (f.t==='bool') return e.checked;
+  if (f.t==='tags') return e.value.split('\n').map(s=>s.trim()).filter(Boolean);
+  if (f.t==='number') return e.value===''?0:Number(e.value);
+  return e.value;
+}
+
+// ---------- CONFIG (linha única) ----------
+async function viewConfig(){
+  $('#view').innerHTML = `<div class="head"><h2>Configurações</h2></div><div id="cf"><p class="empty">Carregando…</p></div>`;
+  const { data:c } = await sb.from('config').select('*').eq('id',1).single();
+  const v = c || {};
+  $('#cf').innerHTML = `
+    <div class="field"><label>Destino do formulário (endpoint Formspree/Web3Forms — vazio = modo demo)</label><input type="text" id="c_action" value="${esc(v.form_action)}"></div>
+    <div class="field"><label>Método</label><select id="c_method"><option ${v.form_method==='POST'?'selected':''}>POST</option><option ${v.form_method==='GET'?'selected':''}>GET</option></select></div>
+    <hr style="border-color:var(--line); margin:1.4rem 0;">
+    <div class="field row"><input type="checkbox" id="c_bativo" ${v.banco_ativo?'checked':''} style="width:auto"><label for="c_bativo" style="margin:0">Mostrar bloco "Banco de talentos"</label></div>
+    <div class="field"><label>Banco de talentos — título</label><input type="text" id="c_btit" value="${esc(v.banco_titulo)}"></div>
+    <div class="field"><label>Banco de talentos — texto</label><textarea id="c_btxt">${esc(v.banco_texto)}</textarea></div>
+    <div class="field"><label>Banco de talentos — link</label><input type="text" id="c_blink" value="${esc(v.banco_link)}"></div>
+    <button class="btn btn-primary" id="csave">Salvar</button> <span class="msg" id="cmsg" style="display:inline-block"></span>`;
+  $('#csave').onclick = async () => {
+    const m=$('#cmsg'); m.className='msg'; m.textContent='Salvando…';
+    const payload = { id:1, form_action:$('#c_action').value, form_method:$('#c_method').value,
+      banco_ativo:$('#c_bativo').checked, banco_titulo:$('#c_btit').value, banco_texto:$('#c_btxt').value, banco_link:$('#c_blink').value };
+    const { error } = await sb.from('config').upsert(payload);
+    m.className = error?'msg err':'msg ok'; m.textContent = error?error.message:'Salvo!';
+  };
+}
+
+// ---------- POSTS (editor visual) ----------
+async function viewPosts(){
+  $('#view').innerHTML = `<div class="head"><h2>Posts</h2><button class="btn btn-primary" id="novo">+ Novo post</button></div><div id="list"><p class="empty">Carregando…</p></div>`;
+  $('#novo').onclick = () => formPost(null);
+  const { data, error } = await sb.from('posts').select('id,titulo,categoria,publicado,data_publicacao').order('data_publicacao',{ascending:false});
+  if (error){ $('#list').innerHTML=`<p class="empty">Erro: ${esc(error.message)}</p>`; return; }
+  if (!data.length){ $('#list').innerHTML=`<p class="empty">Nenhum post.</p>`; return; }
+  $('#list').innerHTML = `<table><thead><tr><th>Título</th><th>Categoria</th><th>Status</th><th></th></tr></thead><tbody>${
+    data.map(p=>`<tr data-id="${p.id}"><td>${esc(p.titulo)}</td><td>${esc(p.categoria)}</td>
+      <td>${p.publicado?'<span class="dot on"></span> publicado':'<span class="dot off"></span> rascunho'}</td>
+      <td style="text-align:right; white-space:nowrap;"><button class="btn btn-ghost btn-sm" data-edit>Editar</button>
+        <button class="btn btn-ghost btn-sm danger" data-del>Excluir</button></td></tr>`).join('')
+  }</tbody></table>`;
+  $('#list').querySelectorAll('tr[data-id]').forEach(tr=>{
+    tr.querySelector('[data-edit]').onclick = async () => {
+      const { data:full } = await sb.from('posts').select('*').eq('id',tr.dataset.id).single();
+      formPost(full);
+    };
+    tr.querySelector('[data-del]').onclick = async () => {
+      if(!confirm('Excluir post?')) return;
+      const { error } = await sb.from('posts').delete().eq('id',tr.dataset.id);
+      if (error) alert(error.message); else viewPosts();
+    };
+  });
+}
+async function formPost(p){
+  const editing = !!p; p = p || {};
+  const { data:autores } = await sb.from('autores').select('id,nome').order('nome');
+  openModal(`<h3>${editing?'Editar':'Novo'} post</h3>
+    <div class="field"><label>Título</label><input type="text" id="p_titulo" value="${esc(p.titulo)}"></div>
+    <div class="field"><label>Slug (URL, sem espaços)</label><input type="text" id="p_slug" value="${esc(p.slug)}"></div>
+    <div class="field"><label>Categoria</label><input type="text" id="p_cat" value="${esc(p.categoria)}"></div>
+    <div class="field"><label>Resumo (aparece no card)</label><textarea id="p_resumo">${esc(p.resumo)}</textarea></div>
+    <div class="field"><label>Autor</label><select id="p_autor">${(autores||[]).map(a=>`<option value="${a.id}" ${a.id===p.autor_id?'selected':''}>${esc(a.nome)}</option>`).join('')}</select></div>
+    <div class="field"><label>Imagem de capa</label><input type="file" id="p_capafile" accept="image/*"><input type="hidden" id="p_capa" value="${esc(p.capa_url)}"><img class="cover-prev" id="p_capaprev"></div>
+    <div class="field"><label>Conteúdo</label>
+      <div class="toolbar">
+        <button data-cmd="formatBlock" data-val="p" title="Parágrafo">P</button>
+        <button data-cmd="formatBlock" data-val="h3" title="Subtítulo">H3</button>
+        <button data-cmd="bold" title="Negrito"><b>B</b></button>
+        <button data-cmd="italic" title="Itálico"><i>I</i></button>
+        <button data-cmd="insertUnorderedList" title="Lista">• Lista</button>
+        <button data-cmd="formatBlock" data-val="blockquote" title="Citação">❝</button>
+        <button data-cmd="createLink" title="Link">🔗 Link</button>
+        <button id="p_img" title="Imagem com legenda">🖼️ Imagem</button>
+      </div>
+      <div class="editor" id="p_corpo" contenteditable="true">${p.corpo_html || '<p><br></p>'}</div>
+      <p class="hint">Selecione o texto e clique no formato. "Imagem" faz upload e já cria a legenda (clique na legenda pra editar).</p>
+    </div>
+    <div class="field row"><input type="date" id="p_data" value="${esc(p.data_publicacao||'')}" style="width:auto"></div>
+    <div class="field row"><input type="checkbox" id="p_pub" ${p.publicado?'checked':''} style="width:auto"><label for="p_pub" style="margin:0">Publicado</label></div>
+    <div class="actions">${editing?'<button class="btn btn-ghost btn-sm danger" id="pdel">Excluir</button>':''}
+      <div class="spacer"></div><button class="btn btn-ghost" data-cancel>Cancelar</button>
+      <button class="btn btn-primary" id="psave">Salvar</button></div><p class="msg" id="pmsg"></p>`);
+
+  // capa preview
+  const prev = $('#p_capaprev');
+  if (p.capa_url){ prev.src=p.capa_url; prev.style.display='block'; }
+  $('#p_capafile').onchange = async (e) => {
+    const file = e.target.files[0]; if(!file) return;
+    $('#pmsg').className='msg'; $('#pmsg').textContent='Enviando capa…';
+    try { const url = await uploadImg(file); $('#p_capa').value=url; prev.src=url; prev.style.display='block'; $('#pmsg').textContent=''; }
+    catch(err){ $('#pmsg').className='msg err'; $('#pmsg').textContent='Falha no upload: '+err.message; }
+  };
+  // toolbar
+  $('#sheet').querySelectorAll('.toolbar button[data-cmd]').forEach(b => b.onmousedown = (ev) => {
+    ev.preventDefault();
+    if (b.dataset.cmd==='createLink'){ const u=prompt('URL do link:'); if(u) document.execCommand('createLink',false,u); }
+    else document.execCommand(b.dataset.cmd, false, b.dataset.val || null);
+  });
+  $('#p_img').onmousedown = (ev) => { ev.preventDefault();
+    const inp = el('<input type="file" accept="image/*" style="display:none">'); document.body.appendChild(inp);
+    inp.onchange = async () => { const f=inp.files[0]; inp.remove(); if(!f) return;
+      const sel = window.getSelection(); $('#p_corpo').focus();
+      $('#pmsg').className='msg'; $('#pmsg').textContent='Enviando imagem…';
+      try { const url = await uploadImg(f);
+        document.execCommand('insertHTML', false, `<figure><img src="${url}" alt=""><figcaption>Legenda (clique para editar)</figcaption></figure><p><br></p>`);
+        $('#pmsg').textContent='';
+      } catch(err){ $('#pmsg').className='msg err'; $('#pmsg').textContent='Falha: '+err.message; }
+    };
+    inp.click();
+  };
+  $('#sheet [data-cancel]').onclick = closeModal;
+  if (editing) $('#pdel').onclick = async () => { if(!confirm('Excluir post?')) return; await sb.from('posts').delete().eq('id',p.id); closeModal(); viewPosts(); };
+  $('#psave').onclick = async () => {
+    const m=$('#pmsg'); m.className='msg'; m.textContent='Salvando…';
+    const payload = { titulo:$('#p_titulo').value, slug:$('#p_slug').value.trim(), categoria:$('#p_cat').value,
+      resumo:$('#p_resumo').value, autor_id:$('#p_autor').value||null, capa_url:$('#p_capa').value,
+      corpo_html:$('#p_corpo').innerHTML, data_publicacao:$('#p_data').value||null, publicado:$('#p_pub').checked };
+    if (!payload.slug){ m.className='msg err'; m.textContent='Defina um slug.'; return; }
+    const q = editing ? sb.from('posts').update(payload).eq('id',p.id) : sb.from('posts').insert(payload);
+    const { error } = await q;
+    if (error){ m.className='msg err'; m.textContent=error.message; return; }
+    closeModal(); viewPosts();
+  };
+}
+async function uploadImg(file){
+  const ext = (file.name.split('.').pop()||'png').toLowerCase();
+  const path = `posts/${Date.now()}-${Math.random().toString(36).slice(2,7)}.${ext}`;
+  const { error } = await sb.storage.from('blog').upload(path, file, { cacheControl:'3600', upsert:false });
+  if (error) throw error;
+  return sb.storage.from('blog').getPublicUrl(path).data.publicUrl;
+}
+
+// ---------- USUÁRIOS (super admin) ----------
+async function viewUsuarios(){
+  if (ME.role!=='super_admin'){ $('#view').innerHTML='<p class="empty">Acesso restrito.</p>'; return; }
+  $('#view').innerHTML = `<div class="head"><h2>Usuários</h2><button class="btn btn-primary" id="conv">+ Convidar</button></div>
+    <p class="hint" style="margin-bottom:1rem;">Convidar envia um e-mail com link para a pessoa definir a senha. Ninguém se cadastra sozinho.</p>
+    <div id="list"><p class="empty">Carregando…</p></div>`;
+  $('#conv').onclick = formConvite;
+  const { data, error } = await sb.from('perfis').select('id,nome,role,created_at').order('created_at');
+  if (error){ $('#list').innerHTML=`<p class="empty">Erro: ${esc(error.message)}</p>`; return; }
+  $('#list').innerHTML = `<table><thead><tr><th>Nome</th><th>Papel</th><th></th></tr></thead><tbody>${
+    data.map(u=>`<tr data-id="${u.id}"><td>${esc(u.nome)}</td>
+      <td><select data-role ${u.id===ME.id?'disabled':''}><option value="editor" ${u.role==='editor'?'selected':''}>editor</option><option value="super_admin" ${u.role==='super_admin'?'selected':''}>super admin</option></select></td>
+      <td style="text-align:right">${u.id===ME.id?'<span class="hint">você</span>':'<button class="btn btn-ghost btn-sm danger" data-rm>Remover acesso</button>'}</td></tr>`).join('')
+  }</tbody></table>`;
+  $('#list').querySelectorAll('tr[data-id]').forEach(tr=>{
+    const id=tr.dataset.id; const sel=tr.querySelector('[data-role]');
+    if (sel) sel.onchange = async () => { const { error } = await sb.from('perfis').update({ role:sel.value }).eq('id',id); if(error) alert(error.message); };
+    const rm = tr.querySelector('[data-rm]');
+    if (rm) rm.onclick = async () => { if(!confirm('Remover o acesso deste usuário ao painel?')) return;
+      const { error } = await sb.from('perfis').delete().eq('id',id); if(error) alert(error.message); else viewUsuarios(); };
+  });
+}
+function formConvite(){
+  openModal(`<h3>Convidar usuário</h3>
+    <div class="field"><label>E-mail</label><input type="email" id="u_email"></div>
+    <div class="field"><label>Nome</label><input type="text" id="u_nome"></div>
+    <div class="field"><label>Papel</label><select id="u_role"><option value="editor">editor</option><option value="super_admin">super admin</option></select></div>
+    <div class="actions"><div class="spacer"></div><button class="btn btn-ghost" data-cancel>Cancelar</button><button class="btn btn-primary" id="usend">Enviar convite</button></div>
+    <p class="msg" id="umsg"></p>`);
+  $('#sheet [data-cancel]').onclick = closeModal;
+  $('#usend').onclick = async () => {
+    const m=$('#umsg'); m.className='msg'; m.textContent='Enviando…';
+    const { data, error } = await sb.functions.invoke('invite-user', { body:{ email:$('#u_email').value.trim(), nome:$('#u_nome').value.trim(), role:$('#u_role').value } });
+    if (error || (data && data.error)){ m.className='msg err'; m.textContent=(data&&data.error)||error.message; return; }
+    closeModal(); viewUsuarios();
+  };
+}
+
+init();
+</script>
+</body>
+</html>
