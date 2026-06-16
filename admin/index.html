@@ -7,8 +7,6 @@
 <title>RedePOS · Painel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="icon" href="/favicons/favicon-painel.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-painel.svg">
 <style>
   :root{
     --accent:#E75314; --accent-2:#FA7A36; --soft:rgba(231,83,20,.12);
@@ -118,6 +116,8 @@
     <button class="navbtn" data-view="posts">Posts</button>
     <button class="navbtn" data-view="autores">Autores</button>
     <button class="navbtn" data-view="vagas">Vagas</button>
+    <button class="navbtn" data-view="beneficios">Benefícios</button>
+    <button class="navbtn" data-view="candidaturas">Candidaturas</button>
     <button class="navbtn" data-view="redes_sociais">Redes sociais</button>
     <button class="navbtn" data-view="form_assuntos">Assuntos do form</button>
     <button class="navbtn" data-view="form_campos">Campos do form</button>
@@ -152,8 +152,22 @@ const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
 const RES = {
   autores: { table:'autores', title:'Autores', list:['nome','cargo'], order:'nome',
     fields:[{k:'nome',l:'Nome',t:'text',req:1},{k:'cargo',l:'Cargo',t:'text'},{k:'linkedin_url',l:'LinkedIn (URL)',t:'text'},{k:'avatar_url',l:'Avatar (cole uma URL ou envie uma imagem)',t:'text',upload:1}] },
-  vagas: { table:'vagas', title:'Vagas', list:['titulo','ativo'], order:'ordem',
-    fields:[{k:'titulo',l:'Título',t:'text',req:1},{k:'tags',l:'Tags (uma por linha)',t:'tags'},{k:'link',l:'Link do formulário da vaga',t:'text'},{k:'ativo',l:'Ativa (aparece no site)',t:'bool'},{k:'ordem',l:'Ordem',t:'number'}] },
+  vagas: { table:'vagas', title:'Vagas', list:['titulo','modelo','ativo'], order:'ordem',
+    fields:[
+      {k:'titulo',l:'Título',t:'text',req:1},
+      {k:'slug',l:'Slug (URL, sem espaços — ex.: ux-designer)',t:'text'},
+      {k:'local',l:'Local (ex.: Recife)',t:'text'},
+      {k:'modelo',l:'Modelo',t:'select',opts:['Híbrido','Remoto','Presencial']},
+      {k:'tipo',l:'Tipo',t:'select',opts:['CLT','PJ','Estágio','Temporário']},
+      {k:'resumo',l:'Resumo (1 linha, aparece no topo)',t:'text'},
+      {k:'tags',l:'Tags (uma por linha)',t:'tags'},
+      {k:'descricao_html',l:'Descrição completa',t:'rich'},
+      {k:'link',l:'Link externo de candidatura (opcional — vazio = usa o formulário do site)',t:'text'},
+      {k:'ativo',l:'Ativa (aparece no site)',t:'bool'},
+      {k:'ordem',l:'Ordem',t:'number'},
+    ] },
+  beneficios: { table:'beneficios', title:'Benefícios (O que nos move)', list:['titulo','ativo'], order:'ordem',
+    fields:[{k:'titulo',l:'Título',t:'text',req:1},{k:'descricao',l:'Descrição',t:'textarea'},{k:'ativo',l:'Ativo',t:'bool'},{k:'ordem',l:'Ordem',t:'number'}] },
   redes_sociais: { table:'redes_sociais', title:'Redes sociais', list:['rede','ativo'], order:'ordem',
     fields:[{k:'rede',l:'Rede',t:'select',opts:['linkedin','instagram','facebook','x','youtube','tiktok','whatsapp','email']},{k:'ativo',l:'Ativa',t:'bool'},{k:'url',l:'URL / @ / telefone / e-mail',t:'text'},{k:'ordem',l:'Ordem',t:'number'}] },
   form_assuntos: { table:'form_assuntos', title:'Assuntos do formulário', list:['assunto'], order:'ordem',
@@ -202,6 +216,7 @@ document.querySelectorAll('.navbtn').forEach(b => b.onclick = () => go(b.dataset
 function go(view){
   document.querySelectorAll('.navbtn').forEach(b => b.classList.toggle('active', b.dataset.view===view));
   if (view==='posts') return viewPosts();
+  if (view==='candidaturas') return viewCandidaturas();
   if (view==='config') return viewConfig();
   if (view==='usuarios') return viewUsuarios();
   return viewResource(view);
@@ -262,6 +277,13 @@ function formResource(name, row){
       catch (err){ m.className='msg err'; m.textContent='Falha no upload: '+err.message; }
     };
   });
+  $('#sheet').querySelectorAll('.toolbar[data-rich]').forEach(tb => {
+    tb.querySelectorAll('button[data-cmd]').forEach(b => b.onmousedown = (ev) => {
+      ev.preventDefault();
+      if (b.dataset.cmd==='createLink'){ const u=prompt('URL do link:'); if(u) document.execCommand('createLink',false,u); }
+      else document.execCommand(b.dataset.cmd, false, b.dataset.val || null);
+    });
+  });
   if (editing) $('#del').onclick = async () => { if(!confirm('Excluir?')) return; await sb.from(R.table).delete().eq('id',row.id); closeModal(); viewResource(name); };
   $('#save').onclick = async () => {
     const payload = {};
@@ -276,6 +298,17 @@ function formResource(name, row){
 function fieldHTML(f, val){
   const id = 'f_'+f.k;
   if (f.upload) return `<div class="field"><label>${f.l}</label><input type="text" id="${id}" value="${esc(val)}"><div class="row" style="margin-top:.45rem"><input type="file" accept="image/*" id="${id}_file"></div><img id="${id}_prev" class="cover-prev" src="${esc(val)}" ${val?'style="display:block"':''}></div>`;
+  if (f.t==='rich') return `<div class="field"><label>${f.l}</label>
+    <div class="toolbar" data-rich="${id}">
+      <button data-cmd="formatBlock" data-val="p" title="Parágrafo">P</button>
+      <button data-cmd="formatBlock" data-val="h3" title="Subtítulo">H3</button>
+      <button data-cmd="bold" title="Negrito"><b>B</b></button>
+      <button data-cmd="italic" title="Itálico"><i>I</i></button>
+      <button data-cmd="insertUnorderedList" title="Lista">• Lista</button>
+      <button data-cmd="formatBlock" data-val="blockquote" title="Citação">❝</button>
+      <button data-cmd="createLink" title="Link">🔗 Link</button>
+    </div>
+    <div class="editor" id="${id}" contenteditable="true">${val || '<p><br></p>'}</div></div>`;
   if (f.t==='bool') return `<div class="field row"><input type="checkbox" id="${id}" ${val?'checked':''} style="width:auto"> <label for="${id}" style="margin:0">${f.l}</label></div>`;
   if (f.t==='textarea') return `<div class="field"><label>${f.l}</label><textarea id="${id}">${esc(val)}</textarea></div>`;
   if (f.t==='tags') return `<div class="field"><label>${f.l}</label><textarea id="${id}">${(Array.isArray(val)?val:[]).map(esc).join('\n')}</textarea></div>`;
@@ -285,6 +318,7 @@ function fieldHTML(f, val){
 }
 function readField(f){
   const e = $('#f_'+f.k);
+  if (f.t==='rich') return e.innerHTML;
   if (f.t==='bool') return e.checked;
   if (f.t==='tags') return e.value.split('\n').map(s=>s.trim()).filter(Boolean);
   if (f.t==='number') return e.value===''?0:Number(e.value);
@@ -304,11 +338,19 @@ async function viewConfig(){
     <div class="field"><label>Banco de talentos — título</label><input type="text" id="c_btit" value="${esc(v.banco_titulo)}"></div>
     <div class="field"><label>Banco de talentos — texto</label><textarea id="c_btxt">${esc(v.banco_texto)}</textarea></div>
     <div class="field"><label>Banco de talentos — link</label><input type="text" id="c_blink" value="${esc(v.banco_link)}"></div>
+    <hr style="border-color:var(--line); margin:1.4rem 0;">
+    <div class="field"><label>Candidaturas — webhook (URL do n8n)</label><input type="text" id="c_hook" value="${esc(v.candidaturas_webhook)}" placeholder="https://seu-n8n/webhook/..."></div>
+    <div class="field"><label>Carreira — título da seção (ex.: "O que nos move")</label><input type="text" id="c_ctit" value="${esc(v.carreira_titulo)}"></div>
+    <div class="field"><label>Carreira — texto</label><textarea id="c_ctxt">${esc(v.carreira_texto)}</textarea></div>
+    <div class="field"><label>Vagas — título da seção (ex.: "Vagas abertas")</label><input type="text" id="c_vtit" value="${esc(v.vagas_titulo)}"></div>
+    <div class="field"><label>Vagas — texto</label><textarea id="c_vtxt">${esc(v.vagas_texto)}</textarea></div>
     <button class="btn btn-primary" id="csave">Salvar</button> <span class="msg" id="cmsg" style="display:inline-block"></span>`;
   $('#csave').onclick = async () => {
     const m=$('#cmsg'); m.className='msg'; m.textContent='Salvando…';
     const payload = { id:1, form_action:$('#c_action').value, form_method:$('#c_method').value,
-      banco_ativo:$('#c_bativo').checked, banco_titulo:$('#c_btit').value, banco_texto:$('#c_btxt').value, banco_link:$('#c_blink').value };
+      banco_ativo:$('#c_bativo').checked, banco_titulo:$('#c_btit').value, banco_texto:$('#c_btxt').value, banco_link:$('#c_blink').value,
+      candidaturas_webhook:$('#c_hook').value, carreira_titulo:$('#c_ctit').value, carreira_texto:$('#c_ctxt').value,
+      vagas_titulo:$('#c_vtit').value, vagas_texto:$('#c_vtxt').value };
     const { error } = await sb.from('config').upsert(payload);
     m.className = error?'msg err':'msg ok'; m.textContent = error?error.message:'Salvo!';
   };
@@ -416,6 +458,33 @@ async function uploadImg(file){
   const { error } = await sb.storage.from('blog').upload(path, file, { cacheControl:'3600', upsert:false });
   if (error) throw error;
   return sb.storage.from('blog').getPublicUrl(path).data.publicUrl;
+}
+
+// ---------- CANDIDATURAS ----------
+async function viewCandidaturas(){
+  $('#view').innerHTML = `<div class="head"><h2>Candidaturas</h2></div>
+    <p class="hint" style="margin-bottom:1rem;">Recebidas pelo site. Também são enviadas ao webhook (n8n) configurado em Configurações.</p>
+    <div id="list"><p class="empty">Carregando…</p></div>`;
+  const { data, error } = await sb.from('candidaturas').select('*').order('created_at',{ascending:false});
+  if (error){ $('#list').innerHTML = `<p class="empty">Erro: ${esc(error.message)}</p>`; return; }
+  if (!data.length){ $('#list').innerHTML = `<p class="empty">Nenhuma candidatura ainda.</p>`; return; }
+  const fmt = d => d ? new Date(d).toLocaleString('pt-BR') : '';
+  $('#list').innerHTML = `<table><thead><tr><th>Quando</th><th>Nome</th><th>E-mail</th><th>Vaga</th><th>Webhook</th><th></th></tr></thead><tbody>${
+    data.map((c,i)=>`<tr><td>${fmt(c.created_at)}</td><td>${esc(c.nome)}</td><td>${esc(c.email)}</td><td>${esc(c.vaga_titulo)}</td>
+      <td>${c.encaminhado?'<span class="dot on"></span> ok':'<span class="dot off"></span> —'}</td>
+      <td style="text-align:right"><button class="btn btn-ghost btn-sm" data-idx="${i}">Ver</button></td></tr>`).join('')
+  }</tbody></table>`;
+  $('#list').querySelectorAll('[data-idx]').forEach(b => b.onclick = () => {
+    const c = data[b.dataset.idx];
+    openModal(`<h3>Candidatura — ${esc(c.nome)}</h3>
+      <p style="margin-bottom:.5rem"><strong>E-mail:</strong> ${esc(c.email)}</p>
+      <p style="margin-bottom:.5rem"><strong>Telefone:</strong> ${esc(c.telefone)||'—'}</p>
+      <p style="margin-bottom:.5rem"><strong>LinkedIn/portfólio:</strong> ${c.linkedin?`<a href="${esc(c.linkedin)}" target="_blank" rel="noopener">${esc(c.linkedin)}</a>`:'—'}</p>
+      <p style="margin-bottom:.5rem"><strong>Vaga:</strong> ${esc(c.vaga_titulo)||'—'}</p>
+      <p style="margin:.8rem 0 .3rem"><strong>Mensagem:</strong></p><p style="color:var(--muted)">${esc(c.mensagem)||'—'}</p>
+      <div class="actions"><div class="spacer"></div><button class="btn btn-primary" data-cancel>Fechar</button></div>`);
+    $('#sheet [data-cancel]').onclick = closeModal;
+  });
 }
 
 // ---------- USUÁRIOS (super admin) ----------

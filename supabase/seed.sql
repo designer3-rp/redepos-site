@@ -131,11 +131,35 @@ export class CardComponent {
 <p><a href="https://angular.io/guide/dynamic-component-loader" target="_blank" rel="noopener">Dynamic Component Loader — Angular docs</a></p>$RP$, 'a2222222-2222-2222-2222-222222222222', true, '2022-09-27')
 on conflict (slug) do nothing;
 
-insert into vagas (titulo, tags, link, ativo, ordem) values
-  ($RP$Pessoa Desenvolvedora Back-end$RP$, ARRAY[$RP$Node.js / Go$RP$,$RP$Remoto$RP$,$RP$Pleno / Sênior$RP$], $RP$https://SUA-PLATAFORMA/vaga/back-end$RP$, true, 1),
-  ($RP$Pessoa Desenvolvedora Front-end$RP$, ARRAY[$RP$React$RP$,$RP$Remoto$RP$,$RP$Pleno$RP$], $RP$https://SUA-PLATAFORMA/vaga/front-end$RP$, true, 2),
-  ($RP$Analista de Compliance$RP$, ARRAY[$RP$Mercado regulado$RP$,$RP$Híbrido · Recife$RP$,$RP$Pleno / Sênior$RP$], $RP$https://SUA-PLATAFORMA/vaga/compliance$RP$, true, 3)
-on conflict do nothing;
+insert into vagas (titulo, slug, local, modelo, tipo, resumo, tags, descricao_html, link, ativo, ordem) values
+  ($RP$Product Manager$RP$, $RP$product-manager$RP$, $RP$Recife$RP$, $RP$Híbrido$RP$, $RP$CLT$RP$,
+   $RP$Lidere a descoberta e a entrega de produtos que conectam sonhos e prêmios.$RP$,
+   ARRAY[$RP$Produto$RP$,$RP$Híbrido (Recife)$RP$,$RP$Pleno / Sênior$RP$],
+   $RP$<p>Buscamos um(a) Product Manager para liderar a descoberta, a priorização e a entrega de produtos no mercado regulado de capitalização e loterias.</p><h3>O que você vai fazer</h3><ul><li>Conduzir descoberta com usuários, dados e stakeholders.</li><li>Priorizar o roadmap junto a design e engenharia.</li><li>Garantir entregas com foco em resultado e compliance.</li></ul><h3>O que esperamos</h3><ul><li>Experiência com produtos digitais de ponta a ponta.</li><li>Boa comunicação e visão de negócio.</li><li>Diferencial: vivência em mercado regulado.</li></ul>$RP$,
+   $RP$$RP$, true, 1),
+  ($RP$UX Designer$RP$, $RP$ux-designer$RP$, $RP$Recife$RP$, $RP$Híbrido$RP$, $RP$CLT$RP$,
+   $RP$Desenhe experiências simples e seguras em produtos que impactam milhões.$RP$,
+   ARRAY[$RP$Design$RP$,$RP$Híbrido (Recife)$RP$,$RP$Pleno$RP$],
+   $RP$<p>Procuramos um(a) UX Designer para desenhar experiências simples e seguras em produtos que movimentam milhões de pessoas.</p><h3>O que você vai fazer</h3><ul><li>Pesquisa, fluxos, protótipos e validação com usuários.</li><li>Trabalhar lado a lado com produto e engenharia.</li><li>Evoluir o nosso design system.</li></ul><h3>O que esperamos</h3><ul><li>Portfólio com casos de ponta a ponta.</li><li>Domínio de Figma e métodos de pesquisa.</li><li>Sensibilidade para acessibilidade e clareza.</li></ul>$RP$,
+   $RP$$RP$, true, 2),
+  ($RP$Back-end Developer Sênior$RP$, $RP$back-end-developer-senior$RP$, $RP$Recife$RP$, $RP$Híbrido$RP$, $RP$CLT$RP$,
+   $RP$Construa plataformas escaláveis, seguras e integradas de ponta a ponta.$RP$,
+   ARRAY[$RP$Node.js / Go$RP$,$RP$Híbrido (Recife)$RP$,$RP$Sênior$RP$],
+   $RP$<p>Buscamos uma pessoa desenvolvedora Back-end Sênior para construir plataformas escaláveis, seguras e integradas.</p><h3>O que você vai fazer</h3><ul><li>Projetar e manter APIs e serviços de alta disponibilidade.</li><li>Cuidar de performance, segurança e observabilidade.</li><li>Integrar emissores, meios de pagamento e homologação.</li></ul><h3>O que esperamos</h3><ul><li>Sólida experiência com Node.js e/ou Go.</li><li>Bancos relacionais, filas e boas práticas de arquitetura.</li><li>Diferencial: experiência em ambientes regulados.</li></ul>$RP$,
+   $RP$$RP$, true, 3)
+on conflict (slug) do nothing;
+
+-- Benefícios ("O que nos move") — semeia só uma vez
+insert into beneficios (titulo, descricao, ordem)
+select v.titulo, v.descricao, v.ordem from (values
+  ($RP$Saúde mental levada a sério$RP$, $RP$Apoio real ao bem-estar, com espaço para pausas e cuidado.$RP$, 1),
+  ($RP$Modelo híbrido e flexível$RP$, $RP$Equilíbrio entre presença e autonomia, no seu ritmo.$RP$, 2),
+  ($RP$Ambiente seguro para inovar$RP$, $RP$Errar faz parte. Aqui dá pra experimentar e aprender.$RP$, 3),
+  ($RP$Orçamento pra cursos e eventos$RP$, $RP$Investimento contínuo no seu desenvolvimento.$RP$, 4),
+  ($RP$Remuneração competitiva$RP$, $RP$Pacote alinhado ao mercado e ao seu impacto.$RP$, 5),
+  ($RP$Cultura viva e colaborativa$RP$, $RP$Gente que acredita no que faz, junta de verdade.$RP$, 6)
+) as v(titulo, descricao, ordem)
+where not exists (select 1 from beneficios);
 
 insert into redes_sociais (rede, ativo, url, ordem) values
   ($RP$linkedin$RP$, true, $RP$https://www.linkedin.com/company/redepos$RP$, 1),
@@ -162,10 +186,15 @@ insert into form_assuntos (assunto, ordem) values
   ($RP$Outro assunto$RP$, 4)
 on conflict do nothing;
 
-insert into config (id, form_action, form_method, banco_ativo, banco_titulo, banco_texto, banco_link) values
-  (1, $RP$$RP$, $RP$POST$RP$, true, $RP$Não encontrou sua vaga?$RP$, $RP$Entre para o nosso banco de talentos — adoramos conhecer gente boa antes da hora.$RP$, $RP$https://SUA-PLATAFORMA/banco-de-talentos$RP$)
+insert into config (id, form_action, form_method, banco_ativo, banco_titulo, banco_texto, banco_link,
+                    carreira_titulo, carreira_texto, vagas_titulo, vagas_texto, candidaturas_webhook) values
+  (1, $RP$$RP$, $RP$POST$RP$, true, $RP$Não encontrou sua vaga?$RP$, $RP$Entre para o nosso banco de talentos — adoramos conhecer gente boa antes da hora.$RP$, $RP$https://SUA-PLATAFORMA/banco-de-talentos$RP$,
+   $RP$O que nos move$RP$, $RP$Na RedePOS, inovação nasce da diversidade de ideias e de gente que acredita no que faz.$RP$,
+   $RP$Vagas abertas$RP$, $RP$Procuramos profissionais que amam resolver problemas e transformar ideias em valor real para o usuário.$RP$,
+   $RP$$RP$)
 on conflict (id) do update set
-  form_action=excluded.form_action, banco_texto=excluded.banco_texto, banco_link=excluded.banco_link;
+  carreira_titulo=excluded.carreira_titulo, carreira_texto=excluded.carreira_texto,
+  vagas_titulo=excluded.vagas_titulo, vagas_texto=excluded.vagas_texto;
 
 -- ============================================================
 --  SUPER ADMIN

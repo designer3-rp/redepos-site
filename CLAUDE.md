@@ -19,10 +19,14 @@ Começou como uma landing page estática de arquivo único e evoluiu para um **s
 index.html                         # Home (one-pager): hero, sobre, soluções, cases, vagas, contato
 blog.html                          # Listagem de posts publicados
 post.html                          # Post individual (?slug=...)
+vagas.html                         # Carreira: "O que nos move" + benefícios + lista de vagas
+vaga.html                          # Detalhe da vaga (?slug=) + formulário de candidatura
+favicons/                          # Favicons (gerador padrão: favicon-32x32.png, apple-touch-icon.png, etc.)
 admin/index.html                   # Painel admin (SPA própria: login + CRUD + editor visual)
 supabase/schema.sql                # Schema do banco (idempotente — rodar primeiro)
 supabase/seed.sql                  # Dados iniciais + 3 posts migrados (rodar depois do schema)
 supabase/functions/invite-user/index.ts  # Edge Function: convida usuário (super_admin only)
+supabase/functions/apply/index.ts         # Edge Function: recebe candidatura, salva e dispara webhook (n8n)
 CLAUDE.md
 ```
 
@@ -79,6 +83,9 @@ SPA de arquivo único. Login por e-mail/senha (Supabase Auth); checa `perfis.rol
 - O `corpo_html` dos posts é confiável (vem do painel autenticado) e renderizado via `innerHTML`.
 
 ## Pendências / próximos passos
+- **Carreira/Vagas (já implementado):** vagas viram conteúdo rico no painel (slug, local, modelo, tipo, resumo, tags, descrição em editor visual). `vagas.html` lista benefícios ("O que nos move", tabela `beneficios`) + vagas → `vaga.html?slug=` mostra a descrição completa e o formulário de candidatura. A home mantém a prévia + "Ver todas as vagas".
+- **Candidaturas:** o formulário em `vaga.html` chama a Edge Function `apply`, que (1) salva em `candidaturas` (visível no painel) e (2) encaminha pro **webhook do n8n** definido em Configurações (`config.candidaturas_webhook`). Deploy: `supabase functions deploy apply`. Se a vaga tiver `link` externo preenchido, o botão leva pra lá em vez do formulário.
+- **Integração externa de vagas (futuro):** o schema já tem `vagas.fonte`/`vagas.external_id` e `config.vagas_source_url` para sincronizar vagas de uma plataforma externa via uma futura Edge Function `vagas-sync` (puxar e dar upsert na tabela `vagas`). Definir a plataforma/contrato da API.
 - Trocar os **logos de cliente** placeholder no marquee da home (`<span class="client-logo">` → `<img>`), mantendo a lista duplicada 2x pro loop.
 - Números reais de **stats/cases/vagas** (os atuais são ilustrativos).
 - Configurar o **destino real do formulário** de contato em `config.form_action` (Formspree/Web3Forms) e o e-mail real (hoje `contato@redepos.com.br` é placeholder).

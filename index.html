@@ -4,12 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>RedePOS — Tecnologia por trás dos produtos que mudam vidas</title>
+<link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+<link rel="shortcut icon" href="favicons/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+<link rel="manifest" href="favicons/site.webmanifest">
+
 <meta name="description" content="Mais que uma fábrica de software: traduzimos oportunidades em plataformas digitais seguras, integradas e prontas para operar em larga escala." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="icon" href="/favicons/favicon-site.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-site.svg">
 <style>
   /* ============================================================
      TOKENS DE MARCA — ajuste aqui pra bater 100% com o Framer
@@ -156,7 +160,7 @@
   .avatars span:nth-child(3){ background:linear-gradient(135deg,#00B894,#55EFC4); }
   .loved small{ font-size:.85rem; color:var(--on-dark-soft); } .loved b{ color:#fff; }
   .hero h1{
-    font-size:clamp(2.4rem,6.2vw,4.5rem); font-weight:800; max-width:22ch; margin:0 auto 1.4rem;
+    font-size:clamp(2.4rem,6.2vw,4.5rem); font-weight:800; max-width:14ch; margin:0 auto 1.4rem;
     background:linear-gradient(180deg,#fff 55%, rgba(255,255,255,.55)); -webkit-background-clip:text; background-clip:text; color:transparent;
   }
   .hero h1 .hl{ background:linear-gradient(135deg,var(--accent),var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
@@ -406,7 +410,7 @@
       <a href="#sobre">Sobre</a>
       <a href="#solucoes">Soluções</a>
       <a href="#cases">Cases</a>
-      <a href="#vagas">Vagas</a>
+      <a href="vagas.html">Vagas</a>
       <a href="blog.html">Blog</a>
       <a href="#contato">Contato</a>
     </nav>
@@ -421,7 +425,7 @@
     <a href="#sobre">Sobre</a>
     <a href="#solucoes">Soluções</a>
     <a href="#cases">Cases</a>
-    <a href="#vagas">Vagas</a>
+    <a href="vagas.html">Vagas</a>
     <a href="blog.html">Blog</a>
     <a href="#contato">Contato</a>
     <a href="#contato" class="btn btn-primary" data-open-form style="justify-content:center; margin-top:.7rem;">Vamos conversar?
@@ -437,7 +441,7 @@
       <div class="avatars"><img src="data:image/jpeg;base64,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" alt="Pessoa amada pela RedePOS"><img src="data:image/jpeg;base64,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" alt="Pessoa amada pela RedePOS"><img src="data:image/jpeg;base64,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" alt="Pessoa amada pela RedePOS"></div>
       <small>Amado por <b>+1 milhão de brasileiros</b></small>
     </div>
-    <h1 class="reveal">Tecnologia por trás<br>dos produtos que<br><span class="hl">mudam vidas</span></h1>
+    <h1 class="reveal">Tecnologia por trás dos produtos que <span class="hl">mudam vidas</span></h1>
     <p class="reveal">Criamos a plataforma digital que impulsiona sorteios, prêmios e sonhos. Tudo integrado, seguro e acessível.</p>
     <div class="cta-row reveal">
       <a href="#contato" class="btn btn-primary" data-open-form>Vamos conversar?
@@ -619,6 +623,8 @@
     </div>
     <!-- Vagas e Banco de Talentos sao gerenciados pelo painel /admin (content.json) -->
     <div class="jobs" id="jobs"></div>
+    <div style="text-align:center; margin-top:1.6rem;"><a href="vagas.html" class="btn btn-primary">Ver todas as vagas
+      <svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M14 4H6M14 4V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
     <a class="spontaneous reveal" id="bancoTalentos" target="_blank" rel="noopener" style="display:none;"></a>
   </div>
 </section>
@@ -648,11 +654,11 @@
       </div>
       <div class="foot-col">
         <h4>Navegação</h4>
-        <a href="#sobre">Sobre</a><a href="#solucoes">Soluções</a><a href="#cases">Cases</a><a href="#vagas">Vagas</a><a href="blog.html">Blog</a>
+        <a href="#sobre">Sobre</a><a href="#solucoes">Soluções</a><a href="#cases">Cases</a><a href="vagas.html">Vagas</a><a href="blog.html">Blog</a>
       </div>
       <div class="foot-col">
         <h4>Fale com a gente</h4>
-        <a href="#contato">Contato</a><a href="#vagas">Trabalhe conosco</a>
+        <a href="#contato">Contato</a><a href="vagas.html">Trabalhe conosco</a>
         <a href="https://www.linkedin.com/company/redepos" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://www.instagram.com/redepos_/" target="_blank" rel="noopener">Instagram</a>
       </div>
@@ -888,14 +894,18 @@
     c = c || {};
     const form = c.form || {};
 
-    // VAGAS
+    // VAGAS (prévia — abre a página de detalhe)
     const jobs = document.getElementById('jobs');
-    if (jobs) jobs.innerHTML = (c.vagas||[]).filter(v => v.ativo !== false).map(v => `
-      <a class="job reveal" href="${esc(v.link)||'#'}" target="_blank" rel="noopener">
+    if (jobs) jobs.innerHTML = (c.vagas||[]).filter(v => v.ativo !== false).map(v => {
+      const href = v.slug ? ('vaga.html?slug='+encodeURIComponent(v.slug)) : (esc(v.link)||'#');
+      const ext = v.slug ? '' : ' target="_blank" rel="noopener"';
+      const meta = [ v.modelo ? (v.modelo + (v.local? ' ('+v.local+')':'')) : '' ].concat(v.tags||[]).filter(Boolean);
+      return `
+      <a class="job reveal" href="${href}"${ext}>
         <div class="info"><h3>${esc(v.titulo)}</h3>
-          <div class="meta">${(v.tags||[]).map(t => `<span>${esc(t)}</span>`).join('')}</div></div>
-        <span class="apply">Candidatar-se ${ARROW}</span>
-      </a>`).join('');
+          <div class="meta">${meta.map(t => `<span>${esc(t)}</span>`).join('')}</div></div>
+        <span class="apply">Ver vaga ${ARROW}</span>
+      </a>`; }).join('');
 
     // BANCO DE TALENTOS
     const bt = document.getElementById('bancoTalentos');
@@ -1027,7 +1037,7 @@
       ]));
       const c = cfg.data || {};
       window.__renderSite({
-        vagas: (vagas.data||[]).map(v=>({ativo:v.ativo,titulo:v.titulo,tags:v.tags||[],link:v.link})),
+        vagas: (vagas.data||[]).map(v=>({ativo:v.ativo,titulo:v.titulo,tags:v.tags||[],link:v.link,slug:v.slug,modelo:v.modelo,local:v.local})),
         bancoTalentos: {ativo:c.banco_ativo,titulo:c.banco_titulo,texto:c.banco_texto,link:c.banco_link},
         social: (redes.data||[]).map(s=>({rede:s.rede,ativo:s.ativo,url:s.url})),
         form: {action:c.form_action||'',method:c.form_method||'POST',

@@ -4,11 +4,15 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>RedePOS · Blog</title>
+<link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+<link rel="shortcut icon" href="favicons/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+<link rel="manifest" href="favicons/site.webmanifest">
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="icon" href="/favicons/favicon-site.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-site.svg">
 <style>
   /* ============================================================
      TOKENS DE MARCA — ajuste aqui pra bater 100% com o Framer
@@ -461,7 +465,7 @@
       <a href="index.html#contato">Contato</a>
     </nav>
     <div class="nav-cta">
-      <a href="#" class="btn btn-primary" data-open-form>Vamos conversar?
+      <a href="index.html#contato" class="btn btn-primary">Vamos conversar?
         <svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M14 4H6M14 4V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -474,7 +478,7 @@
     <a href="index.html#vagas">Vagas</a>
     <a href="blog.html" class="nav-active">Blog</a>
     <a href="index.html#contato">Contato</a>
-    <a href="#" class="btn btn-primary" data-open-form style="justify-content:center; margin-top:.7rem;">Vamos conversar?
+    <a href="index.html#contato" class="btn btn-primary" style="justify-content:center; margin-top:.7rem;">Vamos conversar?
       <svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M14 4H6M14 4V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
   </div>
@@ -488,7 +492,7 @@
     <div id="postRelated"></div>
   </div>
 </article>
-<section class="pad grain" style="padding-top:0;"><div class="wrap cta-final reveal in"><h2>Pronto para escalar seu negócio?</h2><p>A gente te mostra como transformar operação em resultado real.</p><a class="btn btn-primary" href="#" data-open-form>Vamos conversar? <svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M14 4H6M14 4V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></section>
+<section class="pad grain" style="padding-top:0;"><div class="wrap cta-final reveal in"><h2>Pronto para escalar seu negócio?</h2><p>A gente te mostra como transformar operação em resultado real.</p><a class="btn btn-primary" href="index.html#contato">Vamos conversar? <svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M14 4H6M14 4V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></section>
 <footer class="grain">
   <div class="wrap">
     <div class="foot-top">
@@ -514,35 +518,6 @@
     </div>
   </div>
 </footer>
-<!-- ============== OVERLAY DO FORMULÁRIO (drawer desktop / bottom-sheet mobile) ============== -->
-<div class="overlay" id="formOverlay" aria-hidden="true">
-  <div class="overlay-bg" data-close-form></div>
-  <aside class="drawer" role="dialog" aria-modal="true" aria-label="Fale com a gente">
-    <button class="drawer-close" type="button" data-close-form aria-label="Fechar">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
-    <div class="drawer-head">
-      <span class="eyebrow">Contato</span>
-      <h3>Vamos conversar?</h3>
-      <p>Conte o seu desafio — respondemos rápido.</p>
-    </div>
-    <form id="contactForm" action="" method="POST" novalidate>
-      <div id="formFields"></div>
-      <div class="field"><label for="assunto">Como podemos ajudar?</label>
-        <select id="assunto" name="assunto"></select>
-      </div>
-      <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Enviar mensagem
-        <svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M14 4H6M14 4V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <p class="form-msg" id="formMsg"></p>
-    </form>
-    <div class="drawer-channels">
-      <span class="drawer-or">ou fale pela gente por aqui</span>
-      <div class="channels" id="drawerChannels"></div>
-    </div>
-  </aside>
-</div>
-
 <script>
   const header=document.getElementById('header');
   addEventListener('scroll',()=>header.classList.toggle('scrolled',scrollY>20));
@@ -552,21 +527,6 @@
   mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>tg(false)));
   addEventListener('resize',()=>{if(innerWidth>900)tg(false);});
   document.querySelectorAll('#year').forEach(el=>el.textContent=new Date().getFullYear());
-
-  // ---------- overlay do formulário ----------
-  const overlay = document.getElementById('formOverlay');
-  const openForm = () => {
-    overlay.classList.add('open'); overlay.setAttribute('aria-hidden','false');
-    document.body.classList.add('no-scroll');
-    const first = overlay.querySelector('input,textarea,select'); if(first) setTimeout(()=>first.focus(),320);
-  };
-  const closeForm = () => {
-    overlay.classList.remove('open'); overlay.setAttribute('aria-hidden','true');
-    document.body.classList.remove('no-scroll');
-  };
-  document.querySelectorAll('[data-open-form]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); openForm(); }));
-  document.querySelectorAll('[data-close-form]').forEach(b => b.addEventListener('click', closeForm));
-  addEventListener('keydown', e => { if(e.key==='Escape') closeForm(); });
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -618,96 +578,6 @@
       }
     } catch(e){ body.innerHTML = '<p class="blog-empty">Erro ao carregar: '+(e.message||JSON.stringify(e))+'</p>'; console.warn(e); }
   })();
-})();
-</script>
-
-<script>
-(function(){
-  if (!window.supabase) return;
-  const sb = window.supabase.createClient('https://ahhwkhccnpoqvvhgeyki.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoaHdraGNjbnBvcXZ2aGdleWtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzODUzMjgsImV4cCI6MjA5Njk2MTMyOH0.s0qotGn7OdbFTZxiIo1nj-t2e7GUwzePGrvyYX4JqGk');
-  const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  const ICONS = {
-    linkedin: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5ZM3 9h4v12H3V9Zm6 0h3.8v1.7h.05c.53-1 1.83-2.05 3.76-2.05C20.4 8.65 22 10.5 22 14v7h-4v-6.2c0-1.48-.03-3.38-2.06-3.38-2.06 0-2.38 1.6-2.38 3.27V21H9V9Z"/></svg>',
-    instagram: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>',
-    email: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
-    facebook: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12Z"/></svg>',
-    x: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.66l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.01 4.13H5.05l12.03 15.64Z"/></svg>',
-    youtube: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2.5" y="5.5" width="19" height="13" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M10 9.5l5 2.5-5 2.5v-5Z" fill="currentColor"/></svg>',
-    tiktok: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c.3 2.1 1.6 3.6 3.5 3.9v2.5c-1.3 0-2.5-.4-3.5-1.1v6.1a5.5 5.5 0 1 1-5.5-5.5c.3 0 .6 0 .9.06v2.6a2.9 2.9 0 1 0 2 2.74V3h2.6Z"/></svg>',
-    whatsapp: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.2 1.1-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.5-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.4-.3.6-.3h.4c.2 0 .4 0 .6.5l.8 1.9c.1.2 0 .4-.1.5l-.3.4c-.1.2-.3.3-.1.6.1.3.6 1 1.3 1.6.9.8 1.6 1 1.9 1.2.2.1.4 0 .5-.1l.7-.8c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.1.1.5-.1 1Z"/></svg>'
-  };
-  const SOCIAL_LABELS = { linkedin:'LinkedIn', instagram:'Instagram', facebook:'Facebook', x:'X', youtube:'YouTube', tiktok:'TikTok', whatsapp:'WhatsApp', email:'E-mail' };
-  const socialHref = (rede, url) => {
-    if(!url) return '#';
-    if(rede==='email') return url.startsWith('mailto:') ? url : ('mailto:'+url);
-    if(rede==='whatsapp'){ const d = url.replace(/[^0-9]/g,''); return d ? ('https://wa.me/'+d) : url; }
-    return url;
-  };
-  const socialDisplay = (rede, url) => rede==='email'
-    ? url.replace('mailto:','')
-    : url.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,'');
-
-  (async () => {
-    try {
-      const T = (p, ms=9000) => Promise.race([p, new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),ms))]);
-      const [fieldsRes, subjectsRes, configRes, redesRes] = await T(Promise.all([
-        sb.from('form_campos').select('*').order('ordem'),
-        sb.from('form_assuntos').select('*').order('ordem'),
-        sb.from('config').select('form_action,form_method').eq('id',1).single(),
-        sb.from('redes_sociais').select('*').eq('ativo',true).order('ordem'),
-      ]));
-      const fields = fieldsRes.data || [];
-      const subjects = subjectsRes.data || [];
-      const cfg = configRes.data || {};
-      const redes = redesRes.data || [];
-
-      const ff = document.getElementById('formFields');
-      if (ff) ff.innerHTML = fields.map(f => {
-        const ph = esc(f.placeholder||'');
-        const req = f.obrigatorio ? 'required' : '';
-        if (f.tipo === 'textarea') return `<div class="field"><label for="f_${esc(f.name)}">${esc(f.label)}</label><textarea id="f_${esc(f.name)}" name="${esc(f.name)}" placeholder="${ph}" rows="4" ${req}></textarea></div>`;
-        return `<div class="field"><label for="f_${esc(f.name)}">${esc(f.label)}</label><input id="f_${esc(f.name)}" name="${esc(f.name)}" type="${esc(f.tipo)||'text'}" placeholder="${ph}" ${req}></div>`;
-      }).join('');
-
-      const sel = document.getElementById('assunto');
-      if (sel) sel.innerHTML = subjects.map(s => `<option>${esc(s.assunto)}</option>`).join('');
-
-      const cf = document.getElementById('contactForm');
-      if (cf) { cf.setAttribute('action', cfg.form_action||''); cf.method = cfg.form_method||'POST'; }
-
-      const ch = document.getElementById('drawerChannels');
-      if (ch) ch.innerHTML = redes.filter(s=>s.url).map(s => {
-        const ext = s.rede==='email' ? '' : 'target="_blank" rel="noopener"';
-        return `<a class="channel" href="${esc(socialHref(s.rede,s.url))}" ${ext}>
-          <span class="ci">${ICONS[s.rede]||''}</span>
-          <span><b>${esc(SOCIAL_LABELS[s.rede]||s.rede)}</b><small>${esc(socialDisplay(s.rede,s.url))}</small></span>
-        </a>`;
-      }).join('');
-    } catch(e) { console.warn('form drawer:', e); }
-  })();
-
-  document.getElementById('contactForm').addEventListener('submit', async ev => {
-    ev.preventDefault();
-    const f = ev.target;
-    const faltando = [...f.querySelectorAll('[required]')].some(el => !el.value.trim());
-    if (faltando) { f.reportValidity(); return; }
-    const msg = document.getElementById('formMsg');
-    const action = f.getAttribute('action');
-    if (action && /^https?:/i.test(action)) {
-      try {
-        const res = await fetch(action, { method: f.method||'POST', body: new FormData(f), headers:{ 'Accept':'application/json' } });
-        if (!res.ok) throw new Error();
-        msg.textContent = 'Recebemos sua mensagem! Em breve a gente conversa. 🧡';
-        msg.classList.add('show'); f.reset();
-      } catch(e) {
-        msg.textContent = 'Não consegui enviar agora. Tente de novo ou use os canais abaixo.';
-        msg.classList.add('show');
-      }
-    } else {
-      msg.textContent = 'Recebemos sua mensagem! 🧡 (modo demonstração — defina o destino do formulário no painel)';
-      msg.classList.add('show'); f.reset();
-    }
-  });
 })();
 </script>
 </body>

@@ -129,4 +129,46 @@ exception when others then
 end $$;
 
 -- recarrega o cache da API (PostgREST) para enxergar as tabelas novas
+-- ============================================================
+--  CARREIRA / VAGAS — campos ricos + benefícios + candidaturas
+-- ============================================================
+alter table vagas add column if not exists slug text;
+alter table vagas add column if not exists local text;
+alter table vagas add column if not exists modelo text;        -- Híbrido / Remoto / Presencial
+alter table vagas add column if not exists tipo text;          -- CLT / PJ / Estágio
+alter table vagas add column if not exists resumo text;
+alter table vagas add column if not exists descricao_html text;
+alter table vagas add column if not exists fonte text default 'painel';  -- 'painel' ou 'externa' (sync via API)
+alter table vagas add column if not exists external_id text;             -- id na plataforma externa (sync)
+create unique index if not exists vagas_slug_idx on vagas (slug) where slug is not null;
+
+-- Benefícios ("O que nos move")
+create table if not exists beneficios (
+  id uuid primary key default gen_random_uuid(),
+  titulo text not null, descricao text, ordem int default 0, ativo boolean not null default true
+);
+alter table beneficios enable row level security;
+drop policy if exists "read beneficios"  on beneficios; create policy "read beneficios"  on beneficios for select using (ativo = true or is_admin());
+drop policy if exists "write beneficios" on beneficios; create policy "write beneficios" on beneficios for all   using (is_admin()) with check (is_admin());
+
+-- Candidaturas recebidas pelo site (encaminhadas ao n8n pela Edge Function)
+create table if not exists candidaturas (
+  id uuid primary key default gen_random_uuid(),
+  vaga_id uuid references vagas(id) on delete set null,
+  vaga_titulo text, nome text, email text, telefone text, linkedin text, mensagem text,
+  payload jsonb, encaminhado boolean default false,
+  created_at timestamptz default now()
+);
+alter table candidaturas enable row level security;
+-- inserção é feita pela Edge Function com service role; leitura só p/ admin
+drop policy if exists "read candidaturas" on candidaturas; create policy "read candidaturas" on candidaturas for select using (is_admin());
+
+-- Config: textos da carreira + webhook + fonte externa
+alter table config add column if not exists candidaturas_webhook text default '';   -- URL do n8n
+alter table config add column if not exists vagas_source_url    text default '';     -- sync de vagas (futuro)
+alter table config add column if not exists carreira_titulo text default 'O que nos move';
+alter table config add column if not exists carreira_texto  text default '';
+alter table config add column if not exists vagas_titulo    text default 'Vagas abertas';
+alter table config add column if not exists vagas_texto     text default '';
+
 notify pgrst, 'reload schema';

@@ -18,7 +18,9 @@ Site institucional + blog + painel administrativo. HTML/CSS/JS puro no front, **
 ### 3. Edge Function (convite de usuários)
 ```bash
 supabase functions deploy invite-user
+supabase functions deploy apply
 ```
+Depois, no painel → **Configurações → Candidaturas — webhook**, cole a URL do seu fluxo no n8n.
 
 ### 4. Rodar localmente
 **Não** abra os `.html` com duplo-clique. Sirva por HTTP:
@@ -38,6 +40,8 @@ python3 -m http.server 5173
 | `supabase/schema.sql` | Estrutura do banco (rodar 1º) |
 | `supabase/seed.sql` | Dados iniciais + 3 posts (rodar 2º) |
 | `supabase/functions/invite-user/index.ts` | Edge Function de convite |
+| `vagas.html` / `vaga.html` | Carreira (benefícios + vagas) e detalhe da vaga |
+| `supabase/functions/apply/index.ts` | Edge Function: candidatura → salva + webhook (n8n) |
 | `CLAUDE.md` | Documentação completa do projeto |
 
 Detalhes de tudo (marca, RLS, convenções, pendências) estão no **`CLAUDE.md`**.
