@@ -13,7 +13,7 @@
 <meta name="description" content="Mais que uma fábrica de software: traduzimos oportunidades em plataformas digitais seguras, integradas e prontas para operar em larga escala." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <style>
   /* ============================================================
      TOKENS DE MARCA — ajuste aqui pra bater 100% com o Framer
@@ -24,8 +24,8 @@
     --accent-soft:   rgba(231,83,20,.12);
     --brand-blue:    #1859D6;
 
-    --bg-dark:       #0E0E12;
-    --bg-darker:     #08080B;
+    --bg-dark:       #03040d;
+    --bg-darker:     #010208;
     --bg-light:      #F6F4F0;
     --bg-white:      #FFFFFF;
 
@@ -44,14 +44,14 @@
   *{ box-sizing:border-box; margin:0; padding:0; }
   html{ scroll-behavior:smooth; scroll-padding-top:88px; }
   body{
-    font-family:'Manrope',system-ui,sans-serif;
+    font-family:'Inter',system-ui,sans-serif;
     background:var(--bg-dark);
     color:var(--on-dark);
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
     line-height:1.55;
   }
-  h1,h2,h3,h4{ font-family:'Sora',sans-serif; line-height:1.08; letter-spacing:-.02em; font-weight:700; }
+  h1,h2,h3,h4{ font-family:'Inter',sans-serif; line-height:1.08; letter-spacing:-.02em; font-weight:700; }
   a{ color:inherit; text-decoration:none; }
   img{ display:block; max-width:100%; }
   .wrap{ width:100%; max-width:var(--maxw); margin:0 auto; padding:0 24px; }
@@ -66,7 +66,7 @@
   /* ====================== BOTÕES ====================== */
   .btn{
     display:inline-flex; align-items:center; gap:.55rem;
-    font-family:'Sora',sans-serif; font-weight:600; font-size:.96rem;
+    font-family:'Inter',sans-serif; font-weight:600; font-size:.96rem;
     padding:.85rem 1.4rem; border-radius:999px; cursor:pointer; border:0;
     transition:transform .35s var(--ease), box-shadow .35s var(--ease), background .3s;
     will-change:transform;
@@ -86,7 +86,7 @@
 
   .eyebrow{
     display:inline-flex; align-items:center; gap:.5rem;
-    font-family:'Sora',sans-serif; font-weight:600; font-size:.78rem;
+    font-family:'Inter',sans-serif; font-weight:600; font-size:.78rem;
     letter-spacing:.12em; text-transform:uppercase; color:var(--accent);
   }
   .eyebrow::before{ content:""; width:26px; height:1px; background:var(--accent); display:inline-block; }
@@ -102,7 +102,7 @@
     border-color:var(--line-dark);
   }
   .nav{ display:flex; align-items:center; justify-content:space-between; padding-top:1.25rem; padding-bottom:1.25rem; }
-  .logo{ display:flex; align-items:center; gap:.6rem; font-family:'Sora',sans-serif; font-weight:800; font-size:1.18rem; letter-spacing:-.02em; }
+  .logo{ display:flex; align-items:center; gap:.6rem; font-family:'Inter',sans-serif; font-weight:800; font-size:1.18rem; letter-spacing:-.02em; }
   .logo-img{ height:30px; width:auto; display:block; }
   .foot-brand .logo-img{ height:34px; }
   .logo .mark{
@@ -127,33 +127,28 @@
   }
   .mobile-menu.open{ display:flex; animation:menuIn .3s var(--ease); }
   @keyframes menuIn{ from{ opacity:0; transform:translateY(-8px); } to{ opacity:1; transform:none; } }
-  .mobile-menu a:not(.btn){ padding:.85rem .2rem; color:var(--on-dark-soft); font-family:'Sora',sans-serif; font-weight:500; border-bottom:1px solid var(--line-dark); transition:color .25s; }
+  .mobile-menu a:not(.btn){ padding:.85rem .2rem; color:var(--on-dark-soft); font-family:'Inter',sans-serif; font-weight:500; border-bottom:1px solid var(--line-dark); transition:color .25s; }
   .mobile-menu a:not(.btn):hover{ color:#fff; }
 
   /* ====================== HERO ====================== */
   .hero{
-    padding:11rem 0 6rem; text-align:center; overflow:hidden;
-    background:radial-gradient(ellipse 95% 65% at 50% -8%, #0d2152 0%, #091736 30%, #050c1c 58%, var(--bg-dark) 86%);
+    position:relative; padding:11rem 0 6rem; text-align:center; overflow:hidden;
+    background:linear-gradient(180deg, #000529 0%, #00041f 55%, #00020f 100%);
   }
-  .hero::after{
-    content:""; position:absolute; top:-12%; left:50%; transform:translateX(-50%);
-    width:1150px; height:720px; z-index:0; pointer-events:none;
-    background:radial-gradient(ellipse at center, rgba(24,89,214,.28), transparent 64%);
-    filter:blur(26px);
-  }
+  .hero::after{ display:none; }
   .hero .wrap{ position:relative; z-index:2; }
   .loved{
-    display:inline-flex; align-items:center; gap:.8rem; margin-bottom:2rem;
-    padding:.45rem .9rem .45rem .5rem; border:1px solid var(--line-dark); border-radius:999px;
-    background:rgba(255,255,255,.03);
+    display:inline-flex; align-items:center; gap:.85rem; margin-bottom:2rem;
   }
+  .loved-text{ display:flex; flex-direction:column; align-items:flex-start; gap:.3rem; }
+  .loved-stars{ color:#6C5CE7; font-size:.95rem; letter-spacing:3px; line-height:1; }
   .avatars{ display:flex; }
   .avatars img{ width:34px; height:34px; border-radius:50%; margin-left:-10px; border:2px solid #0a1525; object-fit:cover; box-shadow:0 2px 8px rgba(0,0,0,.45); }
   .avatars img:first-child{ margin-left:0; }
   .avatars span{
     width:30px; height:30px; border-radius:50%; margin-left:-9px; border:2px solid #0e1d38;
     background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:grid; place-items:center;
-    font-size:.7rem; font-weight:700; font-family:'Sora',sans-serif; color:#fff;
+    font-size:.7rem; font-weight:700; font-family:'Inter',sans-serif; color:#fff;
   }
   .avatars span:first-child{ margin-left:0; }
   .avatars span:nth-child(2){ background:linear-gradient(135deg,#6C5CE7,#A29BFE); }
@@ -169,15 +164,15 @@
 
   /* faixa de logos de clientes */
   .clients{ margin-top:5rem; }
-  .clients-label{ text-align:center; font-family:'Sora',sans-serif; font-size:.78rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--on-dark-soft); margin-bottom:1.6rem; }
+  .clients-label{ text-align:center; font-family:'Inter',sans-serif; font-size:.78rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--on-dark-soft); margin-bottom:1.6rem; }
   .marquee{ -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent); mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent); }
-  .marquee .track{ display:flex; align-items:center; gap:2rem; width:max-content; animation:slide 32s linear infinite; }
+  .marquee .track{ display:flex; align-items:center; gap:2rem; width:max-content; animation:slide 46s linear infinite; }
   .marquee:hover .track{ animation-play-state:paused; }
   /* placeholder de logo (troque por <img class="client-logo" src="..."> ) */
   .client-logo{
     display:inline-flex; align-items:center; gap:.6rem; padding:.6rem 1.1rem; border-radius:12px;
     border:1px solid var(--line-dark); background:rgba(255,255,255,.02);
-    font-family:'Sora',sans-serif; font-weight:600; font-size:.95rem; color:var(--on-dark-soft);
+    font-family:'Inter',sans-serif; font-weight:600; font-size:.95rem; color:var(--on-dark-soft);
     white-space:nowrap; filter:grayscale(1); opacity:.62; transition:.35s var(--ease);
   }
   .client-logo:hover{ opacity:1; filter:none; border-color:var(--accent); color:#fff; transform:translateY(-2px); }
@@ -189,7 +184,7 @@
   .pad{ padding:7rem 0; }
   .light{ background:var(--bg-light); color:var(--ink); }
   .light .eyebrow{ color:var(--accent); }
-  .sec-head{ max-width:720px; margin-bottom:3.2rem; }
+  .sec-head{ max-width:720px; margin:0 0 3.2rem; text-align:left; }
   .sec-head h2{ font-size:clamp(1.9rem,4.4vw,3rem); margin:1rem 0 1rem; }
   .light .sec-head p, .light p.lead{ color:var(--ink-soft); font-size:1.08rem; }
   .pad p.lead{ color:var(--on-dark-soft); font-size:1.08rem; }
@@ -200,14 +195,14 @@
   .about-copy p strong{ color:var(--ink); }
   .tags{ display:flex; flex-wrap:wrap; gap:.6rem; margin-top:2rem; }
   .tag{
-    font-family:'Sora',sans-serif; font-weight:500; font-size:.85rem; padding:.5rem .95rem; border-radius:999px;
+    font-family:'Inter',sans-serif; font-weight:500; font-size:.85rem; padding:.5rem .95rem; border-radius:999px;
     background:#fff; border:1px solid var(--line-light); color:var(--ink); transition:.3s var(--ease);
   }
   .tag:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
 
   .compare{ background:#fff; border:1px solid var(--line-light); border-radius:var(--r); overflow:hidden; box-shadow:0 30px 60px -30px rgba(20,20,26,.18); }
   .compare .col-head{ display:grid; grid-template-columns:1fr 1fr; }
-  .compare .col-head div{ padding:1.1rem 1.3rem; font-family:'Sora',sans-serif; font-weight:700; font-size:1rem; }
+  .compare .col-head div{ padding:1.1rem 1.3rem; font-family:'Inter',sans-serif; font-weight:700; font-size:1rem; }
   .compare .col-head .neg{ color:var(--ink-soft); border-right:1px solid var(--line-light); }
   .compare .col-head .pos{ background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:#fff; }
   .compare .row{ display:grid; grid-template-columns:1fr 1fr; border-top:1px solid var(--line-light); }
@@ -225,7 +220,7 @@
   .stats-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem; }
   .stat{ text-align:center; padding:2rem 1rem; border:1px solid var(--line-dark); border-radius:var(--r); background:rgba(255,255,255,.02); transition:.4s var(--ease); }
   .stat:hover{ border-color:var(--accent); transform:translateY(-4px); background:var(--accent-soft); }
-  .stat .num{ font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(2rem,4vw,2.8rem); background:linear-gradient(135deg,var(--accent),var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .stat .num{ font-family:'Inter',sans-serif; font-weight:800; font-size:clamp(2rem,4vw,2.8rem); background:linear-gradient(135deg,var(--accent),var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .stat .lbl{ color:var(--on-dark-soft); font-size:.92rem; margin-top:.4rem; }
 
   /* ====================== SOLUÇÕES ====================== */
@@ -252,11 +247,11 @@
     transition:.45s var(--ease); position:relative;
   }
   .case:hover{ transform:translateY(-6px); border-color:var(--accent); }
-  .case .seg{ font-family:'Sora',sans-serif; font-weight:600; font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); }
+  .case .seg{ font-family:'Inter',sans-serif; font-weight:600; font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); }
   .case h3{ font-size:1.3rem; margin:.7rem 0 1rem; }
   .case p{ color:var(--on-dark-soft); font-size:.96rem; margin-bottom:1.6rem; }
   .case .result{ display:flex; align-items:baseline; gap:.6rem; border-top:1px solid var(--line-dark); padding-top:1.2rem; }
-  .case .result b{ font-family:'Sora',sans-serif; font-size:1.9rem; font-weight:800; color:#fff; }
+  .case .result b{ font-family:'Inter',sans-serif; font-size:1.9rem; font-weight:800; color:#fff; }
   .case .result small{ color:var(--on-dark-soft); font-size:.85rem; }
 
   /* ====================== VAGAS ====================== */
@@ -270,7 +265,7 @@
   .job .info h3{ font-size:1.18rem; }
   .job .meta{ display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.5rem; }
   .job .meta span{ font-size:.8rem; color:var(--ink-soft); background:var(--bg-light); padding:.3rem .7rem; border-radius:999px; }
-  .job .apply{ display:inline-flex; align-items:center; gap:.4rem; font-family:'Sora',sans-serif; font-weight:600; color:var(--accent); font-size:.95rem; }
+  .job .apply{ display:inline-flex; align-items:center; gap:.4rem; font-family:'Inter',sans-serif; font-weight:600; color:var(--accent); font-size:.95rem; }
   .job .apply svg{ transition:transform .35s var(--ease); }
   .job:hover .apply svg{ transform:translate(4px,-4px); }
   .spontaneous{ margin-top:1.6rem; padding:2rem; border-radius:var(--r); border:1px dashed var(--accent); background:var(--accent-soft); display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; }
@@ -282,11 +277,11 @@
   .channel{ display:flex; align-items:center; gap:1rem; padding:1.1rem 1.3rem; border:1px solid var(--line-dark); border-radius:14px; transition:.35s var(--ease); }
   .channel:hover{ border-color:var(--accent); background:var(--accent-soft); transform:translateX(4px); }
   .channel .ci{ width:42px; height:42px; border-radius:11px; display:grid; place-items:center; background:var(--accent-soft); color:var(--accent); flex:0 0 auto; }
-  .channel b{ display:block; font-family:'Sora',sans-serif; font-size:.98rem; } .channel small{ color:var(--on-dark-soft); }
+  .channel b{ display:block; font-family:'Inter',sans-serif; font-size:.98rem; } .channel small{ color:var(--on-dark-soft); }
 
   form{ background:rgba(255,255,255,.02); border:1px solid var(--line-dark); border-radius:var(--r); padding:2rem; }
   .field{ margin-bottom:1.1rem; } .field.row2{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-  label{ display:block; font-size:.85rem; font-family:'Sora',sans-serif; font-weight:500; margin-bottom:.5rem; color:var(--on-dark-soft); }
+  label{ display:block; font-size:.85rem; font-family:'Inter',sans-serif; font-weight:500; margin-bottom:.5rem; color:var(--on-dark-soft); }
   input,textarea,select{
     width:100%; padding:.85rem 1rem; border-radius:12px; border:1px solid var(--line-dark);
     background:rgba(255,255,255,.03); color:var(--on-dark); font-family:inherit; font-size:.96rem; transition:.3s;
@@ -304,7 +299,7 @@
   .socials{ display:flex; gap:.7rem; }
   .socials a{ width:42px; height:42px; border-radius:11px; display:grid; place-items:center; border:1px solid var(--line-dark); color:var(--on-dark-soft); transition:.35s var(--ease); }
   .socials a:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-3px); }
-  .foot-col h4{ font-family:'Sora',sans-serif; font-size:.82rem; letter-spacing:.1em; text-transform:uppercase; color:var(--on-dark-soft); margin-bottom:1.1rem; }
+  .foot-col h4{ font-family:'Inter',sans-serif; font-size:.82rem; letter-spacing:.1em; text-transform:uppercase; color:var(--on-dark-soft); margin-bottom:1.1rem; }
   .foot-col a{ display:block; color:var(--on-dark); font-size:.95rem; margin-bottom:.7rem; opacity:.8; transition:.25s; }
   .foot-col a:hover{ opacity:1; color:var(--accent); transform:translateX(3px); }
   .foot-bottom{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; padding-top:2rem; color:var(--on-dark-soft); font-size:.86rem; }
@@ -379,7 +374,7 @@
   .drawer-head p{ color:var(--on-dark-soft); font-size:.98rem; }
   .drawer form{ background:none; border:0; padding:0; }
   .drawer-channels{ margin-top:1.6rem; padding-top:1.4rem; border-top:1px solid var(--line-dark); }
-  .drawer-or{ display:block; font-size:.82rem; color:var(--on-dark-soft); margin-bottom:1rem; font-family:'Sora',sans-serif; letter-spacing:.04em; }
+  .drawer-or{ display:block; font-size:.82rem; color:var(--on-dark-soft); margin-bottom:1rem; font-family:'Inter',sans-serif; letter-spacing:.04em; }
   .drawer .channels{ margin-top:0; }
   body.no-scroll{ overflow:hidden; }
 
@@ -398,6 +393,217 @@
     header{ padding-top: env(safe-area-inset-top, 0px); }
     .nav{ padding-top:1.4rem; padding-bottom:1.4rem; }
   }
+
+  /* ---- PASS 1: fidelidade Framer ---- */
+  .hero::before{ content:""; position:absolute; inset:0; z-index:0; pointer-events:none; opacity:.55;
+    background-image:
+      radial-gradient(1.5px 1.5px at 18% 28%, rgba(255,255,255,.7), transparent),
+      radial-gradient(1.5px 1.5px at 72% 18%, rgba(255,255,255,.5), transparent),
+      radial-gradient(1px 1px at 42% 58%, rgba(255,255,255,.6), transparent),
+      radial-gradient(1px 1px at 85% 48%, rgba(255,255,255,.5), transparent),
+      radial-gradient(1.4px 1.4px at 55% 38%, rgba(255,255,255,.45), transparent),
+      radial-gradient(1px 1px at 10% 66%, rgba(255,255,255,.5), transparent),
+      radial-gradient(1px 1px at 90% 78%, rgba(255,255,255,.4), transparent),
+      radial-gradient(1.2px 1.2px at 30% 82%, rgba(255,255,255,.5), transparent),
+      radial-gradient(1px 1px at 63% 70%, rgba(255,255,255,.4), transparent); }
+  .client-row{ display:flex; justify-content:center; align-items:center; gap:2.4rem; flex-wrap:wrap; }
+  .cmp-wrap{ display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; max-width:920px; margin:0 auto; }
+  .cmp-card{ border:1px solid var(--line-dark); border-radius:18px; padding:2rem 2.1rem;
+    background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015)); }
+  .cmp-card h3{ font-family:'Inter',sans-serif; font-weight:700; font-size:1.3rem; margin-bottom:1.3rem; padding-bottom:1.1rem; border-bottom:1px solid var(--line-dark); }
+  .cmp-card.pos h3{ color:var(--accent); }
+  .cmp-card ul{ list-style:none; display:flex; flex-direction:column; gap:1rem; }
+  .cmp-card li{ display:flex; align-items:flex-start; gap:.7rem; color:var(--on-dark-soft); font-size:.98rem; line-height:1.45; }
+  .cmp-card.pos li{ color:#fff; }
+  .cmp-card .x{ color:#6b7488; font-weight:700; flex:none; }
+  .cmp-card .ck{ flex:none; display:grid; place-items:center; width:20px; height:20px; border-radius:50%; background:rgba(70,211,154,.16); margin-top:1px; }
+  .pills{ display:flex; flex-wrap:wrap; justify-content:center; gap:.7rem; margin:3rem auto 0; max-width:760px; }
+  .pill{ display:inline-flex; align-items:center; gap:.5rem; font-family:'Inter',sans-serif; font-weight:500; font-size:.9rem;
+    padding:.6rem 1.1rem; border-radius:999px; background:rgba(255,255,255,.04); border:1px solid var(--line-dark); color:var(--on-dark-soft); transition:.3s var(--ease); }
+  .pill:hover{ border-color:var(--accent); color:#fff; }
+  .pill svg{ color:var(--accent); flex:none; }
+  @media(max-width:760px){ .cmp-wrap{ grid-template-columns:1fr; } .client-row{ gap:1.4rem; } }
+
+  /* ---- PASS 2: tema escuro completo + stats 2x2 ---- */
+  .sec-head p{ color:var(--on-dark-soft); }
+  #solucoes .card{ background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.012)); border-color:var(--line-dark); }
+  #solucoes .card h3{ color:#fff; }
+  #solucoes .card p{ color:var(--on-dark-soft); }
+  #solucoes .card .arrow{ color:var(--on-dark-soft); }
+  #vagas .job{ background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.012)); border-color:var(--line-dark); }
+  #vagas .job .info h3{ color:#fff; }
+  #vagas .job .meta span{ color:var(--on-dark-soft); background:rgba(255,255,255,.06); }
+  #vagas .spontaneous h3{ color:#fff; }
+  #vagas .spontaneous p{ color:var(--on-dark-soft); }
+  .stats-2col{ display:grid; grid-template-columns:1fr 1fr; gap:3.4rem; align-items:center; }
+  .stats .stats-grid{ grid-template-columns:1fr 1fr; }
+  .stats-head{ text-align:left; margin:0; max-width:none; }
+  .stats-head .eyebrow{ justify-content:flex-start; }
+  .stats-head h2{ font-size:clamp(1.8rem,3.6vw,2.6rem); }
+  @media(max-width:820px){ .stats-2col{ grid-template-columns:1fr; gap:2rem; } }
+
+  /* ---- PASS 3: carrosséis + hero animado ---- */
+  .pill-marquee{ margin-top:3rem; overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent); }
+  .pill-track{ display:flex; gap:.7rem; width:max-content; animation:slide 34s linear infinite; }
+  .pill-marquee:hover .pill-track{ animation-play-state:paused; }
+  @keyframes heroTwinkle{ 0%{opacity:.3} 100%{opacity:.72} }
+  @keyframes heroGlow{ 0%{opacity:.6; transform:translateX(-50%) scale(1)} 100%{opacity:1; transform:translateX(-50%) scale(1.14)} }
+  .hero::before{ animation:heroTwinkle 5.5s ease-in-out infinite alternate; }
+  .hero::after{ animation:heroGlow 9s ease-in-out infinite alternate; }
+  @media (prefers-reduced-motion: reduce){ .hero::before, .hero::after, .pill-track, .marquee .track{ animation:none !important; } }
+
+  /* ---- PASS 4: equilíbrio azul/laranja + hero + tipografia ---- */
+  :root{ --blue-2:#3B7BFF; --blue-soft:rgba(24,89,214,.16); }
+  /* Soluções: cards com acento AZUL (laranja fica pros CTAs) */
+  #solucoes .card::before{ background:linear-gradient(135deg, var(--blue-soft), transparent 55%); }
+  #solucoes .card:hover{ border-color:transparent; box-shadow:0 24px 50px -22px rgba(24,89,214,.42); }
+  #solucoes .card .ico{ background:var(--blue-soft); color:var(--blue-2); }
+  #solucoes .card:hover .arrow{ color:var(--blue-2); }
+  /* Números: brancos + acento azul no topo e no hover */
+  .stat{ border-top:2px solid rgba(24,89,214,.45); }
+  .stat .num{ background:none; -webkit-text-fill-color:#fff; color:#fff; }
+  .stat:hover{ border-color:var(--brand-blue); border-top-color:var(--brand-blue); background:var(--blue-soft); }
+  /* Pills: ícone azul */
+  .pill svg{ color:var(--blue-2); }
+  .pill:hover{ border-color:var(--brand-blue); }
+  /* Comparativo: card RedePOS com leve borda azul */
+  .cmp-card.pos{ border-color:rgba(24,89,214,.32); }
+  .cmp-card.pos h3{ color:#fff; }
+  /* Vagas + banco: hover azul */
+  #vagas .job:hover{ border-color:var(--brand-blue); box-shadow:0 16px 40px -24px rgba(24,89,214,.45); }
+  #vagas .job .apply{ color:var(--accent); }
+  #bancoTalentos{ margin-top:.8rem; }
+  #vagas #bancoTalentos .info p{ color:var(--on-dark-soft); font-size:.92rem; margin-top:.35rem; }
+  /* Hero: brilho que se move (azul) + estrelas piscando */
+  @keyframes heroGlow{ 0%{opacity:.5; transform:translate(-56%,0) scale(1)} 50%{opacity:1; transform:translate(-44%,3%) scale(1.14)} 100%{opacity:.5; transform:translate(-56%,0) scale(1)} }
+  @keyframes heroTwinkle{ 0%{opacity:.3} 100%{opacity:.7} }
+  .hero::after{ animation:heroGlow 13s ease-in-out infinite; }
+  .hero::before{ animation:heroTwinkle 5s ease-in-out infinite alternate; }
+
+  /* ---- PASS 5: estrelas com parallax no hero (sempre roda) ---- */
+  .hero::before{ display:none; }            /* remove a camada estática antiga */
+  .hero-stars{ position:absolute; inset:-80px; z-index:0; pointer-events:none; overflow:hidden; }
+  .hero-stars .star-layer{ position:absolute; inset:0; background-repeat:repeat; will-change:transform;
+    transition:transform .25s cubic-bezier(.22,1,.36,1) !important; }
+  .hero-stars .s1{ opacity:.8; background-size:200px 200px;
+    background-image:
+      radial-gradient(1.6px 1.6px at 30px 40px, #fff, transparent),
+      radial-gradient(1.4px 1.4px at 140px 90px, rgba(255,255,255,.85), transparent),
+      radial-gradient(1.2px 1.2px at 90px 160px, rgba(255,255,255,.7), transparent);
+    animation:starTwinkle 4s ease-in-out infinite alternate !important; }
+  .hero-stars .s2{ opacity:.6; background-size:300px 300px;
+    background-image:
+      radial-gradient(1.2px 1.2px at 60px 80px, rgba(255,255,255,.8), transparent),
+      radial-gradient(1px 1px at 220px 50px, rgba(255,255,255,.6), transparent),
+      radial-gradient(1px 1px at 160px 230px, rgba(255,255,255,.55), transparent);
+    animation:starTwinkle 6s ease-in-out infinite alternate-reverse !important; }
+  .hero-stars .s3{ opacity:.4; background-size:420px 420px;
+    background-image:
+      radial-gradient(1px 1px at 120px 140px, rgba(120,170,255,.8), transparent),
+      radial-gradient(1px 1px at 340px 90px, rgba(255,255,255,.5), transparent),
+      radial-gradient(.8px .8px at 260px 320px, rgba(255,255,255,.45), transparent);
+    animation:starTwinkle 8s ease-in-out infinite alternate !important; }
+  @keyframes starTwinkle{ 0%{opacity:.25} 100%{opacity:.85} }
+  /* hero sempre animado, mesmo com reduce-motion (escolha do usuário) */
+  .hero::after{ animation:heroGlow 13s ease-in-out infinite !important; animation-duration:13s !important; }
+  .hero-stars .star-layer{ animation-duration:inherit; }
+
+  /* ---- PASS 6: cores Framer (comparativo + números) + fundo sempre em movimento ---- */
+  /* Comparativo: cards com leve tom azul/violeta */
+  .cmp-card{ background:linear-gradient(180deg, rgba(36,42,86,.30), rgba(15,16,30,.20)) !important; border-color:rgba(255,255,255,.07) !important; }
+  .cmp-card.pos{ border-color:rgba(24,89,214,.30) !important; }
+  /* ✕ em círculo contornado (cinza-azulado) */
+  .cmp-card .x{ width:22px; height:22px; border:1.5px solid #4f5b78; border-radius:50%; display:grid; place-items:center;
+    color:#8a96b0; font-size:.66rem; font-weight:700; flex:none; margin-top:1px; background:none; }
+  /* ✓ em círculo VERDE cheio com check branco */
+  .cmp-card .ck{ width:22px; height:22px; border-radius:50%; background:#22c55e !important; display:grid; place-items:center; flex:none; margin-top:1px; }
+  .cmp-card .ck svg path{ stroke:#fff; }
+  /* eyebrow azul "Do código à experiências" */
+  .cmp-eyebrow{ text-align:center; margin:2.6rem 0 1.3rem; }
+  .eyebrow-pill{ display:inline-flex; align-items:center; gap:.45rem; font-family:'Inter',sans-serif; font-weight:600; font-size:.82rem;
+    color:var(--blue-2); background:rgba(24,89,214,.12); border:1px solid rgba(24,89,214,.32); padding:.42rem .95rem; border-radius:999px; }
+  .eyebrow-pill::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--blue-2); }
+  /* Números: linha curta no topo, alternando laranja/azul */
+  .stat{ position:relative; border-top:1px solid var(--line-dark) !important; overflow:hidden; }
+  .stat::before{ content:""; position:absolute; top:0; left:50%; transform:translateX(-50%); width:46px; height:3px; border-radius:0 0 4px 4px; }
+  .stats-grid .stat:nth-child(1)::before{ background:var(--accent); }
+  .stats-grid .stat:nth-child(2)::before{ background:var(--brand-blue); }
+  .stats-grid .stat:nth-child(3)::before{ background:var(--brand-blue); }
+  .stats-grid .stat:nth-child(4)::before{ background:var(--accent); }
+  .stat:hover{ border-top-color:var(--line-dark) !important; }
+  /* Fundo do hero: drift contínuo (sempre roda) — gradê já pulsa; estrelas agora também derivam */
+  @keyframes heroDrift{ 0%{transform:translate(0,0)} 50%{transform:translate(-14px,-10px)} 100%{transform:translate(0,0)} }
+  .hero-stars{ animation:heroDrift 26s ease-in-out infinite !important; animation-duration:26s !important; }
+
+  /* ---- PASS 7: cabeçalhos padronizados + logos de clientes (imagem/hover) ---- */
+  .client-logo.has-img{ padding:.45rem .7rem; background:none; border:0; filter:none; opacity:.7; }
+  .client-logo.has-img img{ height:34px; width:auto; display:block; }
+  .client-logo .logo-hover{ display:none; }
+  .client-logo.has-img:hover{ opacity:1; transform:translateY(-2px); border:0; background:none; }
+  .client-logo.has-hover:hover .logo-default{ display:none; }
+  .client-logo.has-hover:hover .logo-hover{ display:inline-block; }
+
+  /* ---- PASS 8: hero SEMPRE em movimento (drift) + parallax por camada ---- */
+  .hero-stars{ animation:none !important; overflow:hidden; }
+  .star-parallax{ position:absolute; inset:0; will-change:transform; transition:transform .35s cubic-bezier(.22,1,.36,1) !important; }
+  .star-drift{ position:absolute; inset:-80px; background-repeat:repeat; will-change:transform; }
+  .s1 .star-drift{ background-size:200px 200px; opacity:.85;
+    background-image: radial-gradient(1.6px 1.6px at 30px 40px,#fff,transparent), radial-gradient(1.4px 1.4px at 140px 90px,rgba(255,255,255,.85),transparent), radial-gradient(1.2px 1.2px at 90px 160px,rgba(255,255,255,.7),transparent);
+    animation: driftA 60s linear infinite, twA 4s ease-in-out infinite alternate;
+    animation-duration:60s,4s !important; }
+  .s2 .star-drift{ background-size:300px 300px; opacity:.6;
+    background-image: radial-gradient(1.2px 1.2px at 60px 80px,rgba(255,255,255,.8),transparent), radial-gradient(1px 1px at 220px 50px,rgba(255,255,255,.6),transparent), radial-gradient(1px 1px at 160px 230px,rgba(255,255,255,.55),transparent);
+    animation: driftB 95s linear infinite, twB 6s ease-in-out infinite alternate;
+    animation-duration:95s,6s !important; }
+  .s3 .star-drift{ background-size:420px 420px; opacity:.45;
+    background-image: radial-gradient(1px 1px at 120px 140px,rgba(120,170,255,.8),transparent), radial-gradient(1px 1px at 340px 90px,rgba(255,255,255,.5),transparent), radial-gradient(.8px .8px at 260px 320px,rgba(255,255,255,.45),transparent);
+    animation: driftC 130s linear infinite, twA 8s ease-in-out infinite alternate;
+    animation-duration:130s,8s !important; }
+  @keyframes driftA{ from{transform:translate(0,0)} to{transform:translate(-200px,-200px)} }
+  @keyframes driftB{ from{transform:translate(0,0)} to{transform:translate(-300px,0)} }
+  @keyframes driftC{ from{transform:translate(0,0)} to{transform:translate(-420px,-420px)} }
+  @keyframes twA{ 0%{opacity:.5} 100%{opacity:.9} }
+  @keyframes twB{ 0%{opacity:.35} 100%{opacity:.7} }
+
+  /* ---- PASS 9: números (cabeçalho acima) + nebulosa em movimento + estrelas aleatórias ---- */
+  .stats-2col{ display:block !important; }
+  .stats .stats-head{ text-align:left !important; max-width:760px; margin:0 0 2.6rem !important; }
+  .stats .stats-head .eyebrow{ justify-content:flex-start; }
+  .stats .stats-grid{ grid-template-columns:repeat(2,1fr) !important; }
+  @media(min-width:980px){ .stats .stats-grid{ grid-template-columns:repeat(4,1fr) !important; } }
+
+  /* Nebulosa: vários focos de luz que se movem (universo) */
+  .hero-nebula{ position:absolute; inset:-25%; z-index:0; pointer-events:none; }
+  .hero-nebula::before, .hero-nebula::after{ content:""; position:absolute; inset:0; }
+  .hero-nebula::before{ background:
+      radial-gradient(38% 38% at 30% 35%, rgba(24,89,214,.42), transparent 70%),
+      radial-gradient(34% 34% at 72% 58%, rgba(120,90,255,.28), transparent 70%);
+    animation:neb1 30s ease-in-out infinite alternate !important; animation-duration:30s !important; }
+  .hero-nebula::after{ background:
+      radial-gradient(30% 30% at 62% 28%, rgba(231,83,20,.16), transparent 70%),
+      radial-gradient(44% 44% at 24% 72%, rgba(24,89,214,.26), transparent 70%);
+    animation:neb2 38s ease-in-out infinite alternate !important; animation-duration:38s !important; }
+  @keyframes neb1{ 0%{transform:translate(-4%,-3%) scale(1)}   100%{transform:translate(5%,4%) scale(1.18)} }
+  @keyframes neb2{ 0%{transform:translate(4%,3%) scale(1.12)}  100%{transform:translate(-5%,-4%) scale(1)} }
+
+  /* Estrelas: posições aleatórias via box-shadow (preenchido no JS) */
+  .star-drift{ background:none !important; inset:0 !important; }
+  .dots{ position:absolute; top:50%; left:50%; border-radius:50%; background:#fff; }
+  .s1 .dots{ width:2px;   height:2px;   animation:twk 5s ease-in-out infinite alternate; }
+  .s2 .dots{ width:1.6px; height:1.6px; animation:twk 7s ease-in-out infinite alternate-reverse; }
+  .s3 .dots{ width:1.2px; height:1.2px; animation:twk 9s ease-in-out infinite alternate; }
+  @keyframes twk{ 0%{opacity:.45} 100%{opacity:1} }
+  .s1 .star-drift{ animation:driftA 64s ease-in-out infinite alternate !important;  animation-duration:64s !important; }
+  .s2 .star-drift{ animation:driftB 88s ease-in-out infinite alternate !important;  animation-duration:88s !important; }
+  .s3 .star-drift{ animation:driftC 120s ease-in-out infinite alternate !important; animation-duration:120s !important; }
+  @keyframes driftA{ 0%{transform:translate(0,0)} 100%{transform:translate(60px,-40px)} }
+  @keyframes driftB{ 0%{transform:translate(0,0)} 100%{transform:translate(-80px,30px)} }
+  @keyframes driftC{ 0%{transform:translate(0,0)} 100%{transform:translate(40px,60px)} }
+
+  /* ---- PASS 10: fundo do hero em CANVAS (cores do Framer, movimento garantido) ---- */
+  .hero-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; z-index:0; pointer-events:none; }
 </style>
 </head>
 <body>
@@ -436,10 +642,14 @@
 
 <!-- ===================== HERO ===================== -->
 <section class="hero grain" id="top">
+  <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="loved reveal">
       <div class="avatars"><img src="data:image/jpeg;base64,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" alt="Pessoa amada pela RedePOS"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACEAIQDASIAAhEBAxEB/8QAHAAAAQQDAQAAAAAAAAAAAAAAAAEDBgcCBAUI/8QAOhAAAgEDAgMFBwMCBAcAAAAAAQIDAAQRBSEGEjETQVFhcQcUIjJCgaGRscEjclJi0fAkMzQ1Q4KS/8QAGwEAAQUBAQAAAAAAAAAAAAAAAwABAgQFBgf/xAAvEQABBAECBAQFBQEBAAAAAAABAAIDEQQFEiExQVEiMoGRBmFxwfATFEKh0VLh/9oADAMBAAIRAxEAPwCwiaSg0lcEumWWaXNY0UkkuabuLmG1i7S4lSKPOOZzgVzuJNbtuH9Jmv7w/AmyqOrMegFUprPtQ1C+lSSNbeFIHLKvLzHpjHn1q3j4kmRxaOCDJMyPzK7NS4j0rToVlub2IKwyvKebP6VHJfadoce5S7K5xnsx08eucVQtxrfvMzzTgSSOxZiPh3P8VoTXaZcSS7k/KNtvDNa0ekMrxlVHZn/K9H23tK4fmuYYO3dGkOAzrgA+fhUzgmSZFeNlZGGQVOQRXjeK/jW43UlenOR+wqWaVxjrmkNAtpqM7Wn+DPwhfQ5xUJtIoXEfdKPNB8wXqQbClFRT2fcTDiPR+0nZFvYnMcqDAJ7w2PAg+lSwVjPYY3FruYVwEOFhLSGlpDUU6KBRRSSS0UUUkloGkzQTWJNDRFlmlrAGkfmMbcmOfHw56Zp0lS/t91WU3Vlp0UmIo17Z1B6sTgZ+371TssJACdX3LHm6VKfaT703FF1LdqyyyOW5WJGQvw4/HdUZW2uAA8MExRxs3ISCPKuvwoxHA0BYeQ4vlK1YreRnABwoOSc1sLbymX4Ii2+Rkfg1OOB+En1QI11D2cfg43xVxcO8F6XbIOS1jJznLjJ/NPJlhpoC1YhwXPG4ml5yTT71rvn7MQ8ziQCU8qnboCdjTEt3dSO6pFsTgKOmN/xXsSLQ7AxmOW2hdP8AC6Aj9K4/GHCOlanpcsMtnDzrERE4UBk22waGMs/yCI7CFU0rztwprN1YazbT2bKLiB0TmB2Y4wQR3g9K9XQMXiRmGGKgkeeK8nQaXJPqlvp8aAO04jRYxuWJxXq+0i7G2iiJJKIq5PfgYrN1cN3NIT4d7SCnhRQKKyFbRS0lLSSRRRRSSXMJpM1iWrHNCtFTmayBpoGslNK0lVvt04dmvdPg1e1ijZbRSLjA+LlJGG9Bvn1rQ4Xu9NsOEbea9CRQRoMsw3ZiTVsaxaLqGkXtmwyJ4Xjx6qRVFEKvD+jzyW3vJSLkEOOYc4JBPL47faug02cviMZ6fdZ88dSbh1Ug0fj3Ro7tlt4JgnNgOVwGqz01Az6Y13pKCRwoytUvfXF1faRJG2l29tyjKyPKisfRAC1WN7FY7qPQpVu8mQgk56gbf61Zc0eYBHje4+Em/SkC516+1Axza7HYp0WMRBv16fvXdtbfV7T5r+HUrcf8xSCsi+a9QfQ1wuLuBpNR1Rbu1nnWMkFo47kwlT4ggHrUk4Y4fe0l7VZbwEJylZrtpgfUsM/mhF24Iuyjf3VR3Vquk+13T+yGIXvkYjuHN0/Bq+1qHvw3ZXPHon1BQSsKSRBmwO1V+UE+OzA+tSixWWOFknk7R0kZefGMjO1Uc/xhr+wpQji27j81tUUlJms5TWVGaTNGaZJLRSUUkqXFLUnNTRasC1DRKWyGpxWrTVqeRqSS1eJ2nHDmptZsy3C27shXrkDP8VCeDtPsbzSmWcq8EMrrgbBiWLEY8ATViBgRg7g9RVOakW0HioadbGVYXmaUcx+Elj3eXStfTH2HM9UCahtJUl4ml0nRbRfdbaCKSVlRcALkk43PgKkPs/1jS1R4xeQtgsshRtgev6bVRHEfEMmr6hKvKscakqHmOygHure4L0CW7u5JIZdRmkwNrODYA7AknbvrVEe1tuPFQEu+SmCwvQZ1y01CSW20e9ikuE6domFz4b9ftT3DnFsfvb6ZqVv7pqABwjbrIB1KN3/vUG072Y3tnH2g0/UGbl3Nxeqp891G3SuDFoepNf22qzdvZ20V0UEctwZSxU/OGI+XY+ooZaG8QilxcKIHurUvWivuLre1IUia0mZSfpYFMH7dftXUXK5DHLDYnxPjVf8AD9/Lf8ZWc6vyAQT8nJj5cjr65FT8Vl5sgoM6pw7gR0WWaM0m9FZ1pLLNGaxozStJZZorHNFNadRwtWJami9JzUyIn1anUatQPTitSSW2GqF+1jTHveHRfW2RdWDiUMOvJ9X8H7VLg1Z8qyoUkUMjDlZSMgg9RRIZDFIHjooPYHtLVQSrp/EFmvvEQhlLZkaPYh+8j161NeC7m9sJ5YE4juIYQnLiO2jV+XuAJB/WoLcRRcP8UXMLk+4NKyKevKOY4HqKlltoVrPOTDqrqG3AjbJ/SuqJAbw5KlC4F3iFlWPFplnrUolnur66lJGXurh3yBjcjYfYCtzjySGz0yC25MqRhFHXYb/7865/Btro2lQm4W5a5usfFJK24x4Cox7QOI5OINYttL0UhnGVaQDPZg7En87UFwLlYfIAOAr5LoezOP3rWtSvcfBFGLdCOmSQWA9MD9ascVHOFdNg0a0tbK3BCJGQS3Vm6knzJqRA1g5huUlTa0gcVnSGkzRmqydLSUUZpJIopM0UydQ8vSc9MF6TmqdKa2g+9Oo9aStvXA17jCy0pJEhIublfpQ/Cp8z/Ao+Piy5LtkTbP5zQZsiOBu6Q0FKrq9gsrdp7uZIYV+Z3OAKj83G9vJcpBpEfvLY53lkyqKM4GB1JO/gNqqbXNbv9avEN9OWVQSI12RMjAAH81hoWpm2vF59hInZk+Bzt/I+9dE34fZDCXym3dhy/wBKxRrBlmaxgpp69Vu8W81zezmQZEjEt6k5rgiLVNNMdxZXLMh6Z6jy86k2qp2zE95rn9pJEixkfKcqanG6hSsvZZtOcPaTxBqsrRvdGBH3Y9WA8quPgzhW00ePKqZJerSMclj4mo7wZf8AvVqqLAI5xsx7j5irE088kXxdapTzOcdqvQwtaN3NNakzqE7GRo35scynBFcO84mvuHLyO31Ii/tpR2iS7LKq5wQcbNju6V3p1Ms6gDYGqy471Bb/AIgeOFsx24ECkd5Byx/Ukfaj6ThMzMjZK220b+3H6qlreWcXG3sNOsV9/wCla+ka3YavEXsbhZCPmQ7OvqvWuhzV5/R3guVlhkeORdwyHBB8jUz0Tj24g5YtWi94jG3bRjDj1HQ/ii6j8KyxW/EO4djz/wAP9LNwfiOKWm5I2nv0/wDFZ3NRmtHT7631C2W4s5Vlhb6lPTyPgfKtrNck9rmOLXCiF0jXBwDmmwnM0U3k0VG1JQfNa19fQWMXPcPjPyqN2b0FNarerp9hLcNgldlB7yelQa+u5LiVpJHLMe810ujaKc+5JDTB7n87rF1bVxg1GwW8+w/Oy2de4hursNDEewhbbkU7kf5j/AqJ3I5sKPlH5rfmG9a7ptXbxYsWMz9OFtBck/Jknd+pK6yub2eJAcUxPCQzHuNdOWPAVsbHaleINjxIzSLL4JxJXFPabee8RLHKf6ybZP1D/WulJaNPbiSJcstcFrYhwUPK43GK73DvEC6ZKU1C1M0R6lDysPsdjWJl6a8HdD7Lew9UYRtm91IuDtRFu/IyBGHiKsWCZpY1PQHrVYXWuaHJKJbb3mNiRkGPfH2NdDUOPZGtRb6LbGHbHby4LfZeg9TmswaZkTPoNr6rVdqmNCyy+/opVxhxHFo1o0Fu4bUZV+ED/wAQP1H+BVY26knmbJJ8f3ppQ8s/aXDtJJISzFjkk+JNbUO8reQFddpmnswmbRxJ5lcVquovzX7jwA5BKRiZfMUhIyR+lLnNwnlWvI3LLGuerEVpk0ssC10tL1G80u5E9hO0b/UOquPAjvqy+F+LrfV2W2uFFtfdyZ+GT+0+PkfzVUocsw8KdUFSGBIYbgjqPOsnUtGx9Rb4xTuhHP17haOBq0+C6mm29vzkr4zRXL4VvZNS0K1uJWDzYKyH/MDj/SivKsiE48roX82kj2Xo8MomjbKzkQD7qpuPL3+pDaKdlXnYeZ2H4/eorDcF4mH1R9fTxrLiO+981a6lU5UuQvoNhXOjmEUsUv0kcr+nfXqGnRftsdkfYcfqef8Aa4POf+4nfJ8+HpyXRhm7SSSNiCy4YeYNK65irmyv7rqsBB+B/wCn+vSulK3KuPBTV8OuweipObRBHVYSLm1Hj1oI5rdHHUU6w/ohe/FY2g5rZlP0nFPXGk18LWE681vzr1G9AHMisAGU7kHenIRzROp7qxsh8Lxn6TTVxSvh9ELHGDtGua2YdgAAB6CsVUdRWUR3YjxxU2ikNxtPx4M/kBTlu3xSnw2pi3bPaP54FLbthJPNqKDyQXDmtiNs3B8hWlePyS2z93a8p+9bELf8RKfBa5+qty2IfvVw/wCaZ7vDaeNvjAXUQ4vJge4Zp+NxzoD3kZrQEoN1dnPQqv4zWcc2Z1GdlHMf2H80QOQ3MKlWnard2VuY7aUohPMR5/7FFcqKX4BvRUH4WO87nMBJ+QUW5eQwbWvIA+ZUB5iUyeuRTZ3RlPQS8v2KnNFFZxW2Fjeuz2mnSMfjJTf/ANhXcu/nA7jgfmiiiM6+iFJ/H1T7nbNLa7GYd1FFWBzVU+VJDtMw8RWEW124HeKKKbsn7p4/M1YxnEY880UU/VR6JyH/AKVfM70Qk9n9zRRUh0UT1WSH+tN/Z/NaOr/9sb+00UUz/KfVSj849E1FIxebfq65/wDgVt2ZJJJ6ljn7UUVBnNEkHhXWhJ5BRRRV4clmO5r/2Q==" alt="Pessoa amada pela RedePOS"><img src="data:image/jpeg;base64,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" alt="Pessoa amada pela RedePOS"></div>
-      <small>Amado por <b>+1 milhão de brasileiros</b></small>
+      <div class="loved-text">
+        <span class="loved-stars" aria-hidden="true">★★★★★</span>
+        <small>Amado por <b>+1 milhão de brasileiros</b></small>
+      </div>
     </div>
     <h1 class="reveal">Tecnologia por trás dos produtos que <span class="hl">mudam vidas</span></h1>
     <p class="reveal">Criamos a plataforma digital que impulsiona sorteios, prêmios e sonhos. Tudo integrado, seguro e acessível.</p>
@@ -447,103 +657,72 @@
       <a href="#contato" class="btn btn-primary" data-open-form>Vamos conversar?
         <svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M14 4H6M14 4V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      <a href="#solucoes" class="btn btn-ghost">Ver soluções</a>
     </div>
   </div>
-  <!-- LOGOS DE CLIENTES: troque cada .client-logo por <img class="client-logo" src="logo-cliente.png" alt="Cliente">. Mantenha a lista duplicada (2x) para o loop contínuo funcionar. -->
+  <!-- LOGOS DE CLIENTES: troque cada <span class="lm">..</span>NOME por <img class="client-logo" src="favicons/.."> quando tiver os logos reais. -->
   <div class="clients reveal">
-    <p class="clients-label">Empresas que confiam na RedePOS</p>
-    <div class="marquee">
-      <div class="track">
-        <span class="client-logo"><span class="lm">C1</span>Cliente Um</span>
-        <span class="client-logo"><span class="lm">C2</span>Cliente Dois</span>
-        <span class="client-logo"><span class="lm">C3</span>Cliente Três</span>
-        <span class="client-logo"><span class="lm">C4</span>Cliente Quatro</span>
-        <span class="client-logo"><span class="lm">C5</span>Cliente Cinco</span>
-        <span class="client-logo"><span class="lm">C6</span>Cliente Seis</span>
-        <span class="client-logo"><span class="lm">C1</span>Cliente Um</span>
-        <span class="client-logo"><span class="lm">C2</span>Cliente Dois</span>
-        <span class="client-logo"><span class="lm">C3</span>Cliente Três</span>
-        <span class="client-logo"><span class="lm">C4</span>Cliente Quatro</span>
-        <span class="client-logo"><span class="lm">C5</span>Cliente Cinco</span>
-        <span class="client-logo"><span class="lm">C6</span>Cliente Seis</span>
-      </div>
-    </div>
+    <div class="marquee"><div class="track" id="clientTrack"><span class="client-logo"><span class="lm">AS</span>Alagoas da Sorte</span><span class="client-logo"><span class="lm">CS</span>Carimbó da Sorte</span><span class="client-logo"><span class="lm">CC</span>Capixaba Cap</span><span class="client-logo"><span class="lm">AS</span>Alagoas da Sorte</span><span class="client-logo"><span class="lm">CS</span>Carimbó da Sorte</span><span class="client-logo"><span class="lm">CC</span>Capixaba Cap</span><span class="client-logo"><span class="lm">AS</span>Alagoas da Sorte</span><span class="client-logo"><span class="lm">CS</span>Carimbó da Sorte</span><span class="client-logo"><span class="lm">CC</span>Capixaba Cap</span><span class="client-logo"><span class="lm">AS</span>Alagoas da Sorte</span><span class="client-logo"><span class="lm">CS</span>Carimbó da Sorte</span><span class="client-logo"><span class="lm">CC</span>Capixaba Cap</span><span class="client-logo"><span class="lm">AS</span>Alagoas da Sorte</span><span class="client-logo"><span class="lm">CS</span>Carimbó da Sorte</span><span class="client-logo"><span class="lm">CC</span>Capixaba Cap</span><span class="client-logo"><span class="lm">AS</span>Alagoas da Sorte</span><span class="client-logo"><span class="lm">CS</span>Carimbó da Sorte</span><span class="client-logo"><span class="lm">CC</span>Capixaba Cap</span></div></div>
   </div>
 </section>
 
 <!-- ===================== SOBRE ===================== -->
-<section class="pad light grain" id="sobre">
+<section class="pad grain" id="sobre">
   <div class="wrap">
-    <div class="about-grid">
-      <div class="about-copy reveal">
-        <span class="eyebrow">Quem é a RedePOS</span>
-        <h2 style="font-size:clamp(1.9rem,4.4vw,2.9rem); margin:1rem 0 1.4rem;">Muito além do software</h2>
-        <p>Não entregamos código e desejamos boa sorte. <strong>Traduzimos desafios reais do mercado regulado</strong> — capitalização, loterias e sorteios — em plataformas que já nascem prontas para rodar, integrar e escalar.</p>
-        <p>Vivemos a operação por dentro: conhecemos a régua de compliance, os emissores, os meios de pagamento e a homologação. Por isso construímos <strong>ecossistemas completos e seguros</strong>, pensados para sustentar o negócio no dia a dia — e não só para impressionar numa demo.</p>
-        <p>No fim, o que move a gente é simples: <strong>conectar sonhos e prêmios com segurança e propósito</strong>, para mais de um milhão de brasileiros. 🧡</p>
-        <div class="tags">
-          <span class="tag">UX &amp; UI Design</span>
-          <span class="tag">Segurança &amp; Compliance</span>
-          <span class="tag">Integrações inteligentes</span>
-          <span class="tag">Operação em escala</span>
-          <span class="tag">Business Intelligence</span>
-          <span class="tag">IA aplicada ao produto</span>
-        </div>
+    <div class="sec-head reveal">
+      <h2>Muito além do software</h2>
+      <p class="lead" style="margin-top:1rem;">Plataformas seguras e escaláveis criadas para sustentar operações de alta performance todos os dias.</p>
+    </div>
+    <div class="cmp-wrap reveal">
+      <div class="cmp-card neg">
+        <h3>Fábricas de software</h3>
+        <ul>
+          <li><span class="x">✕</span>Sistemas genéricos sem estudo de mercado</li>
+          <li><span class="x">✕</span>Entregam o código. Você que lute com o resto</li>
+          <li><span class="x">✕</span>Foco em features, não em resultado</li>
+          <li><span class="x">✕</span>Pouca ou nenhuma vivência regulatória</li>
+          <li><span class="x">✕</span>Você precisa integrar tudo depois</li>
+        </ul>
       </div>
-
-      <div class="compare reveal">
-        <div class="col-head">
-          <div class="neg">Fábricas de software</div>
-          <div class="pos">RedePOS</div>
-        </div>
-        <div class="row">
-          <div class="neg"><span class="ic">✕</span>Sistemas genéricos, sem estudo de mercado</div>
-          <div class="pos"><svg class="ic" width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#E75314" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Soluções com base na operação real</div>
-        </div>
-        <div class="row">
-          <div class="neg"><span class="ic">✕</span>Entregam o código. Você que lute com o resto</div>
-          <div class="pos"><svg class="ic" width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#E75314" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Ecossistemas prontos para rodar e escalar</div>
-        </div>
-        <div class="row">
-          <div class="neg"><span class="ic">✕</span>Foco em features, não em resultado</div>
-          <div class="pos"><svg class="ic" width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#E75314" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Foco total no negócio e no compliance</div>
-        </div>
-        <div class="row">
-          <div class="neg"><span class="ic">✕</span>Pouca ou nenhuma vivência regulatória</div>
-          <div class="pos"><svg class="ic" width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#E75314" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Know-how em capitalização e loterias</div>
-        </div>
-        <div class="row">
-          <div class="neg"><span class="ic">✕</span>Você precisa integrar tudo depois</div>
-          <div class="pos"><svg class="ic" width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#E75314" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Plataforma completa, segura e já integrada</div>
-        </div>
+      <div class="cmp-card pos">
+        <h3>RedePOS</h3>
+        <ul>
+          <li><span class="ck"><svg width="12" height="12" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Soluções com base na operação real</li>
+          <li><span class="ck"><svg width="12" height="12" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Ecossistemas prontos para rodar e escalar</li>
+          <li><span class="ck"><svg width="12" height="12" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Foco total no negócio e no compliance</li>
+          <li><span class="ck"><svg width="12" height="12" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Know-how em capitalização e loterias</li>
+          <li><span class="ck"><svg width="12" height="12" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Plataforma completa, segura e já integrada</li>
+        </ul>
       </div>
     </div>
+    <div class="cmp-eyebrow reveal"><span class="eyebrow-pill">Do código à experiências</span></div>
+    <div class="pill-marquee reveal"><div class="pill-track"><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> UX & UI Design</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> Segurança & Compliance</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> Integrações inteligentes</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> Operação em escala</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> Business Intelligence</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> IA aplicada ao produto</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> UX & UI Design</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> Segurança & Compliance</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> Integrações inteligentes</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> Operação em escala</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> Business Intelligence</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> IA aplicada ao produto</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> UX & UI Design</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> Segurança & Compliance</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> Integrações inteligentes</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> Operação em escala</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> Business Intelligence</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> IA aplicada ao produto</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> UX & UI Design</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> Segurança & Compliance</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> Integrações inteligentes</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> Operação em escala</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> Business Intelligence</span><span class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.1 6.4L21 11l-6.9 2.6L12 22l-2.1-8.4L3 11l6.9-2.6z"/></svg> IA aplicada ao produto</span></div></div>
   </div>
 </section>
 
 <!-- ===================== STATS ===================== -->
 <section class="pad stats grain">
   <div class="wrap">
-    <div class="stats-head reveal">
-      <span class="eyebrow" style="justify-content:center;">Nossos números</span>
-      <h2>O que vivemos na prática</h2>
-      <p>Mais do que desenvolver software, traduzimos desafios reais do mercado regulado em soluções seguras, integradas e prontas para escalar.</p>
-    </div>
-    <div class="stats-grid">
-      <div class="stat reveal"><div class="num" data-count="1" data-suffix="M+">0</div><div class="lbl">usuários impactados</div></div>
-      <div class="stat reveal"><div class="num" data-count="10" data-suffix="+">0</div><div class="lbl">anos no mercado</div></div>
-      <div class="stat reveal"><div class="num" data-count="100" data-suffix="M+">0</div><div class="lbl">compras gerenciadas</div></div>
-      <div class="stat reveal"><div class="num" data-count="100" data-suffix="%">0</div><div class="lbl">foco em compliance</div></div>
+    <div class="stats-2col reveal">
+      <div class="stats-head">
+        <span class="eyebrow">Nossos números</span>
+        <h2>Nossos números mostram o que vivemos na prática</h2>
+        <p>Mais do que desenvolver software, traduzimos desafios reais do mercado regulado em soluções seguras, integradas e prontas para escalar.</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat reveal"><div class="num" data-count="1" data-suffix="M+">0</div><div class="lbl">usuários impactados</div></div>
+        <div class="stat reveal"><div class="num" data-count="10" data-suffix="+">0</div><div class="lbl">anos no mercado</div></div>
+        <div class="stat reveal"><div class="num" data-count="100" data-suffix="M+">0</div><div class="lbl">compras gerenciadas</div></div>
+        <div class="stat reveal"><div class="num" data-count="100" data-suffix="%">0</div><div class="lbl">foco em compliance</div></div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ===================== SOLUÇÕES ===================== -->
-<section class="pad light grain" id="solucoes">
+<section class="pad grain" id="solucoes">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">Soluções</span>
+      <span class="eyebrow" style="justify-content:center;">Soluções</span>
       <h2>Soluções que impulsionam nossos clientes</h2>
       <p>Plataformas seguras e escaláveis criadas para sustentar operações de alta performance todos os dias.</p>
     </div>
@@ -614,7 +793,7 @@
 </section>
 
 <!-- ===================== VAGAS ===================== -->
-<section class="pad light grain" id="vagas">
+<section class="pad grain" id="vagas">
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="eyebrow">Carreira</span>
@@ -623,9 +802,7 @@
     </div>
     <!-- Vagas e Banco de Talentos sao gerenciados pelo painel /admin (content.json) -->
     <div class="jobs" id="jobs"></div>
-    <div style="text-align:center; margin-top:1.6rem;"><a href="vagas.html" class="btn btn-primary">Ver todas as vagas
-      <svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M14 4H6M14 4V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
-    <a class="spontaneous reveal" id="bancoTalentos" target="_blank" rel="noopener" style="display:none;"></a>
+<a class="job reveal" id="bancoTalentos" target="_blank" rel="noopener" style="display:none;"></a>
   </div>
 </section>
 
@@ -746,36 +923,14 @@
     ]
   },
   "vagas": [
-    {
-      "ativo": true,
-      "titulo": "Pessoa Desenvolvedora Back-end",
-      "tags": [
-        "Node.js / Go",
-        "Remoto",
-        "Pleno / Sênior"
-      ],
-      "link": "https://SUA-PLATAFORMA/vaga/back-end"
-    },
-    {
-      "ativo": true,
-      "titulo": "Pessoa Desenvolvedora Front-end",
-      "tags": [
-        "React",
-        "Remoto",
-        "Pleno"
-      ],
-      "link": "https://SUA-PLATAFORMA/vaga/front-end"
-    },
-    {
-      "ativo": true,
-      "titulo": "Analista de Compliance",
-      "tags": [
-        "Mercado regulado",
-        "Híbrido · Recife",
-        "Pleno / Sênior"
-      ],
-      "link": "https://SUA-PLATAFORMA/vaga/compliance"
-    }
+    { "ativo": true, "titulo": "Product Manager", "slug": "product-manager", "modelo": "Híbrido", "local": "Recife", "tags": ["Produto","Pleno / Sênior"], "link": "" },
+    { "ativo": true, "titulo": "UX Designer", "slug": "ux-designer", "modelo": "Híbrido", "local": "Recife", "tags": ["Design","Pleno"], "link": "" },
+    { "ativo": true, "titulo": "Back-end Developer Sênior", "slug": "back-end-developer-senior", "modelo": "Híbrido", "local": "Recife", "tags": ["Node.js / Go","Sênior"], "link": "" }
+  ],
+  "clientes": [
+    { "nome": "Alagoas da Sorte", "ativo": true },
+    { "nome": "Carimbó da Sorte", "ativo": true },
+    { "nome": "Capixaba Cap", "ativo": true }
   ],
   "bancoTalentos": {
     "ativo": true,
@@ -894,6 +1049,25 @@
     c = c || {};
     const form = c.form || {};
 
+    // CLIENTES (carrossel) — logo padrão + hover, clicável
+    const ctrack = document.getElementById('clientTrack');
+    if (ctrack) {
+      const cls = (c.clientes||[]).filter(x => x.ativo !== false);
+      if (cls.length) {
+        const item = (x) => {
+          const hasImg = !!x.logo, hasHover = !!x.hover;
+          const inner = hasImg
+            ? `<img class="logo-default" src="${esc(x.logo)}" alt="${esc(x.alt||x.nome||'')}">` + (hasHover ? `<img class="logo-hover" src="${esc(x.hover)}" alt="">` : '')
+            : `<span class="lm">${esc((x.nome||'?').replace(/[^A-Za-zÀ-ÿ ]/g,'').split(/\s+/).map(w=>w[0]||'').slice(0,2).join('').toUpperCase())}</span>${esc(x.nome||'')}`;
+          const klass = 'client-logo' + (hasImg ? ' has-img' : '') + (hasHover ? ' has-hover' : '');
+          return x.link ? `<a class="${klass}" href="${esc(x.link)}" target="_blank" rel="noopener">${inner}</a>` : `<span class="${klass}">${inner}</span>`;
+        };
+        const one = cls.map(item).join('');
+        const half = one.repeat(Math.max(3, Math.ceil(9 / cls.length)));
+        ctrack.innerHTML = half + half;
+      }
+    }
+
     // VAGAS (prévia — abre a página de detalhe)
     const jobs = document.getElementById('jobs');
     if (jobs) jobs.innerHTML = (c.vagas||[]).filter(v => v.ativo !== false).map(v => {
@@ -914,8 +1088,8 @@
       if (b.ativo !== false && b.link){
         bt.style.display = '';
         bt.href = b.link;
-        bt.innerHTML = `<div><h3>${esc(b.titulo)||'Nao encontrou sua vaga?'}</h3><p>${esc(b.texto)}</p></div>
-          <span class="btn btn-primary">Banco de talentos ${ARROW}</span>`;
+        bt.innerHTML = `<div class="info"><h3>${esc(b.titulo)||'Não encontrou sua vaga?'}</h3><p>${esc(b.texto)}</p></div>
+          <span class="apply">Entrar no banco ${ARROW}</span>`;
       } else { bt.style.display = 'none'; }
     }
 
@@ -1025,27 +1199,111 @@
 (function(){
   if (!window.supabase || !window.__renderSite) { console.warn('supabase-js não carregou (CDN?) — usando fallback.'); return; }
   const sb = window.supabase.createClient('https://ahhwkhccnpoqvvhgeyki.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoaHdraGNjbnBvcXZ2aGdleWtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzODUzMjgsImV4cCI6MjA5Njk2MTMyOH0.s0qotGn7OdbFTZxiIo1nj-t2e7GUwzePGrvyYX4JqGk');
-  const T = (p,ms=9000) => Promise.race([p, new Promise((_,r)=>setTimeout(()=>r(new Error('timeout Supabase')),ms))]);
+  const T = (p,ms=15000) => Promise.race([p, new Promise((_,r)=>setTimeout(()=>r(new Error('timeout Supabase')),ms))]);
   (async () => {
     try {
-      const [vagas, redes, campos, assuntos, cfg] = await T(Promise.all([
+      const [vagas, redes, campos, assuntos, cfg, clientes] = await T(Promise.all([
         sb.from('vagas').select('*').order('ordem'),
         sb.from('redes_sociais').select('*').order('ordem'),
         sb.from('form_campos').select('*').order('ordem'),
         sb.from('form_assuntos').select('*').order('ordem'),
         sb.from('config').select('*').eq('id',1).single(),
+        sb.from('clientes').select('*').order('ordem'),
       ]));
       const c = cfg.data || {};
+      const vagasArr = (vagas.data||[]).map(v=>({ativo:v.ativo,titulo:v.titulo,tags:v.tags||[],link:v.link,slug:v.slug,modelo:v.modelo,local:v.local}));
+      const socialArr = (redes.data||[]).map(x=>({rede:x.rede,ativo:x.ativo,url:x.url}));
+      const subjArr = (assuntos.data||[]).map(a=>a.assunto);
+      const fieldsArr = (campos.data||[]).map(f=>({label:f.label,name:f.name,type:f.tipo,required:f.obrigatorio,placeholder:f.placeholder}));
+      const hasCfg = cfg.data && Object.keys(cfg.data).length;
+      const clientesArr = (clientes.data||[]).map(x=>({nome:x.nome,alt:x.alt_text,logo:x.logo_url,hover:x.logo_hover_url,link:x.link_url,ativo:x.ativo}));
       window.__renderSite({
-        vagas: (vagas.data||[]).map(v=>({ativo:v.ativo,titulo:v.titulo,tags:v.tags||[],link:v.link,slug:v.slug,modelo:v.modelo,local:v.local})),
-        bancoTalentos: {ativo:c.banco_ativo,titulo:c.banco_titulo,texto:c.banco_texto,link:c.banco_link},
-        social: (redes.data||[]).map(s=>({rede:s.rede,ativo:s.ativo,url:s.url})),
+        clientes: clientesArr.length ? clientesArr : DEFAULT_CONTENT.clientes,
+        vagas: vagasArr.length ? vagasArr : DEFAULT_CONTENT.vagas,
+        bancoTalentos: hasCfg ? {ativo:c.banco_ativo,titulo:c.banco_titulo,texto:c.banco_texto,link:c.banco_link} : DEFAULT_CONTENT.bancoTalentos,
+        social: socialArr.length ? socialArr : DEFAULT_CONTENT.social,
         form: {action:c.form_action||'',method:c.form_method||'POST',
-               subjects:(assuntos.data||[]).map(a=>a.assunto),
-               fields:(campos.data||[]).map(f=>({label:f.label,name:f.name,type:f.tipo,required:f.obrigatorio,placeholder:f.placeholder}))}
+               subjects: subjArr.length ? subjArr : DEFAULT_CONTENT.form.subjects,
+               fields: fieldsArr.length ? fieldsArr : DEFAULT_CONTENT.form.fields}
       });
-    } catch(e){ console.warn('Supabase (home), usando fallback:', e); }
+    } catch(e){ console.info('Supabase indisponível agora — usando conteúdo padrão.'); }
   })();
+})();
+</script>
+<script>
+(function(){
+  var hero = document.getElementById('top');
+  var cv = document.getElementById('heroCanvas');
+  if(!hero || !cv) return;
+  var ctx = cv.getContext('2d');
+  var DPR = Math.min(window.devicePixelRatio || 1, 2);
+  var W = 0, H = 0, stars = [], glows = [], mx = 0, my = 0, tmx = 0, tmy = 0;
+
+  function build(){
+    stars = [];
+    var n = Math.round((W * H) / 5500);
+    n = Math.max(140, Math.min(n, 460));
+    for(var i = 0; i < n; i++){
+      var d = Math.random();
+      stars.push({
+        x: Math.random()*W, y: Math.random()*H,
+        r: 0.4 + d*1.5, a: 0.25 + Math.random()*0.6,
+        tw: Math.random()*6.2832, tws: 0.5 + Math.random()*1.6,
+        vx: -(0.02 + d*0.07), vy: -(0.008 + d*0.03), d: d,
+        col: Math.random() < 0.14 ? '150,190,255' : '255,255,255'
+      });
+    }
+    glows = [
+      { x:0.32, y:0.34, r:0.60, col:'13,36,110', a:0.40, ph:Math.random()*6.28, sp:0.00015, amp:0.06 },
+      { x:0.70, y:0.56, r:0.44, col:'52,32,150', a:0.26, ph:Math.random()*6.28, sp:0.00020, amp:0.07 }
+    ];
+  }
+  function resize(){
+    var r = hero.getBoundingClientRect();
+    W = r.width; H = r.height;
+    cv.width = Math.round(W*DPR); cv.height = Math.round(H*DPR);
+    cv.style.width = W+'px'; cv.style.height = H+'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    build();
+  }
+  function frame(t){
+    ctx.clearRect(0,0,W,H);
+    mx += (tmx-mx)*0.05; my += (tmy-my)*0.05;
+    ctx.globalCompositeOperation = 'lighter';
+    for(var g=0; g<glows.length; g++){
+      var G = glows[g];
+      var gx = (G.x + Math.sin(t*G.sp + G.ph)*G.amp)*W + mx*34;
+      var gy = (G.y + Math.cos(t*G.sp*1.25 + G.ph)*G.amp)*H + my*34;
+      var rad = G.r*Math.max(W,H)*(1 + Math.sin(t*G.sp*0.7 + G.ph)*0.08);
+      var grd = ctx.createRadialGradient(gx,gy,0,gx,gy,rad);
+      grd.addColorStop(0,'rgba('+G.col+','+G.a+')');
+      grd.addColorStop(1,'rgba('+G.col+',0)');
+      ctx.fillStyle = grd;
+      ctx.fillRect(gx-rad, gy-rad, rad*2, rad*2);
+    }
+    for(var i=0;i<stars.length;i++){
+      var st = stars[i];
+      st.x += st.vx; st.y += st.vy;
+      if(st.x < -3) st.x = W+3; else if(st.x > W+3) st.x = -3;
+      if(st.y < -3) st.y = H+3; else if(st.y > H+3) st.y = -3;
+      var a = st.a + Math.sin(t*0.001*st.tws + st.tw)*0.32;
+      if(a < 0) a = 0;
+      var px = st.x + mx*24*st.d, py = st.y + my*24*st.d;
+      ctx.fillStyle = 'rgba('+st.col+','+a.toFixed(3)+')';
+      ctx.beginPath(); ctx.arc(px, py, st.r, 0, 6.2832); ctx.fill();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+    requestAnimationFrame(frame);
+  }
+  hero.addEventListener('mousemove', function(e){
+    var r = hero.getBoundingClientRect();
+    tmx = ((e.clientX-r.left)/r.width - 0.5)*2;
+    tmy = ((e.clientY-r.top)/r.height - 0.5)*2;
+  });
+  hero.addEventListener('mouseleave', function(){ tmx = 0; tmy = 0; });
+  window.addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(frame);
 })();
 </script>
 </body>

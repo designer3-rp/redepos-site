@@ -117,6 +117,7 @@
     <button class="navbtn" data-view="autores">Autores</button>
     <button class="navbtn" data-view="vagas">Vagas</button>
     <button class="navbtn" data-view="beneficios">Benefícios</button>
+    <button class="navbtn" data-view="clientes">Clientes</button>
     <button class="navbtn" data-view="candidaturas">Candidaturas</button>
     <button class="navbtn" data-view="redes_sociais">Redes sociais</button>
     <button class="navbtn" data-view="form_assuntos">Assuntos do form</button>
@@ -168,6 +169,16 @@ const RES = {
     ] },
   beneficios: { table:'beneficios', title:'Benefícios (O que nos move)', list:['titulo','ativo'], order:'ordem',
     fields:[{k:'titulo',l:'Título',t:'text',req:1},{k:'descricao',l:'Descrição',t:'textarea'},{k:'ativo',l:'Ativo',t:'bool'},{k:'ordem',l:'Ordem',t:'number'}] },
+  clientes: { table:'clientes', title:'Clientes (carrossel)', list:['nome','ativo'], order:'ordem',
+    fields:[
+      {k:'nome',l:'Nome',t:'text',req:1},
+      {k:'alt_text',l:'Texto alternativo (alt da imagem)',t:'text'},
+      {k:'logo_url',l:'Logo padrão (envie PNG ou SVG)',t:'text',upload:1},
+      {k:'logo_hover_url',l:'Logo no hover (envie PNG ou SVG)',t:'text',upload:1},
+      {k:'link_url',l:'URL de destino (abre em nova aba)',t:'text'},
+      {k:'ativo',l:'Ativo (aparece no carrossel)',t:'bool'},
+      {k:'ordem',l:'Ordem',t:'number'},
+    ] },
   redes_sociais: { table:'redes_sociais', title:'Redes sociais', list:['rede','ativo'], order:'ordem',
     fields:[{k:'rede',l:'Rede',t:'select',opts:['linkedin','instagram','facebook','x','youtube','tiktok','whatsapp','email']},{k:'ativo',l:'Ativa',t:'bool'},{k:'url',l:'URL / @ / telefone / e-mail',t:'text'},{k:'ordem',l:'Ordem',t:'number'}] },
   form_assuntos: { table:'form_assuntos', title:'Assuntos do formulário', list:['assunto'], order:'ordem',

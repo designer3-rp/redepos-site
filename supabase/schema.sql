@@ -171,4 +171,13 @@ alter table config add column if not exists carreira_texto  text default '';
 alter table config add column if not exists vagas_titulo    text default 'Vagas abertas';
 alter table config add column if not exists vagas_texto     text default '';
 
+create table if not exists clientes (
+  id uuid primary key default gen_random_uuid(),
+  nome text, alt_text text, logo_url text, logo_hover_url text, link_url text,
+  ativo boolean not null default true, ordem int default 0, created_at timestamptz default now()
+);
+alter table clientes enable row level security;
+drop policy if exists "read clientes"  on clientes; create policy "read clientes"  on clientes for select using (ativo = true or is_admin());
+drop policy if exists "write clientes" on clientes; create policy "write clientes" on clientes for all   using (is_admin()) with check (is_admin());
+
 notify pgrst, 'reload schema';

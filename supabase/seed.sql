@@ -206,3 +206,14 @@ insert into perfis (id, nome, role)
 select id, 'Designer RedePOS', 'super_admin'
   from auth.users where email = 'designer3@redepos.com.br'
 on conflict (id) do update set role = 'super_admin';
+
+-- ============================================================
+--  CLIENTES (carrossel da home) — semeia só uma vez (sem logos; suba no painel)
+-- ============================================================
+insert into clientes (nome, alt_text, link_url, ordem)
+select v.nome, v.alt_text, v.link_url, v.ordem from (values
+  ($RP$Alagoas da Sorte$RP$, $RP$Alagoas da Sorte$RP$, $RP$$RP$, 1),
+  ($RP$Carimbó da Sorte$RP$, $RP$Carimbó da Sorte$RP$, $RP$$RP$, 2),
+  ($RP$Capixaba Cap$RP$,     $RP$Capixaba Cap$RP$,     $RP$$RP$, 3)
+) as v(nome, alt_text, link_url, ordem)
+where not exists (select 1 from clientes);
